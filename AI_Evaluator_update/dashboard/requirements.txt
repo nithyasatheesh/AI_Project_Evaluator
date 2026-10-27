@@ -1,3 +1,0 @@
-streamlit>=1.46
-pandas
-requests
