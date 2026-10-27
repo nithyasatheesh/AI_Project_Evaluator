@@ -1,63 +1,186 @@
 name: Evaluate Participant Submissions
 
+# Participants upload to the SHARED SUBMISSIONS repo (set in evaluator/config.json).
+# This workflow lives in the private evaluator repo, checks the submissions repo for new
+# uploads, scores each new file ONCE, and publishes scores + the HTML dashboard back.
 on:
-  push:
-    paths:
-      - "Submission-Milestone1/**"
-      - "Submission-Milestone2/**"
-      - "Submission-Milestone3/**"
-      - "Submission-Milestone4/**"
-      - "evaluator/**"
-      - "problem_statements/**"
-      - "rubrics/**"
-      - "scripts/**"
-      - "requirements.txt"
-      - ".github/workflows/evaluate-submissions.yml"
+  schedule:
+    - cron: "*/15 2-17 * * 1-6"   # every 15 min, about 07:30–23:15 IST, Monday–Saturday
   workflow_dispatch:
+    inputs:
+      force_path:
+        description: "Re-evaluate one submission (path inside the submissions repo, e.g. Submission-Milestone1/Priya_loan_default.ipynb)"
+        required: false
+        default: ""
+      rebuild_only:
+        description: "Only rebuild SCORES.md / dashboard / Excel from saved results (no AI calls)"
+        type: boolean
+        required: false
+        default: false
+  repository_dispatch:
+    types: [new-submission]
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
-  group: evaluate-submissions-${{ github.ref }}
+  group: evaluate-submissions
   cancel-in-progress: false
 
 jobs:
   evaluate:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
-      - name: Checkout repository
+      - name: Checkout evaluator repo
         uses: actions/checkout@v4
+
+      - name: Read settings from evaluator/config.json
+        id: cfg
+        run: |
+          python - <<'EOF'
+          import json, os, sys
+          c = json.load(open("evaluator/config.json"))
+          repo = c.get("submissions_repo", "").strip()
+          if not repo or "CHANGE-ME" in repo:
+              sys.exit("Set 'submissions_repo' in evaluator/config.json to owner/name of the shared submissions repo.")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              f.write(f"repo={repo}\n")
+              f.write(f"branch={c.get('submissions_branch', 'main')}\n")
+              f.write(f"publish={'true' if c.get('publish_results_to_submissions_repo', True) else 'false'}\n")
+          EOF
+
+      - name: Check submissions repo for new uploads
+        id: check
+        env:
+          TOKEN: ${{ secrets.SUBMISSIONS_TOKEN }}
+          REPO: ${{ steps.cfg.outputs.repo }}
+          BRANCH: ${{ steps.cfg.outputs.branch }}
+        run: |
+          AUTH=""; if [ -n "$TOKEN" ]; then AUTH="x-access-token:${TOKEN}@"; fi
+          HEAD=$(git ls-remote "https://${AUTH}github.com/${REPO}.git" "refs/heads/${BRANCH}" | cut -f1)
+          if [ -z "$HEAD" ]; then
+            echo "::error::Cannot read ${REPO} (branch ${BRANCH}). Check the name in config.json and the SUBMISSIONS_TOKEN secret."
+            exit 1
+          fi
+          LAST=$(cat evaluation-results/.last_submissions_commit 2>/dev/null || true)
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "$HEAD" = "$LAST" ]; then
+            echo "No new uploads since last run."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout submissions repo
+        if: steps.check.outputs.changed == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ steps.cfg.outputs.repo }}
+          ref: ${{ steps.cfg.outputs.branch }}
+          token: ${{ secrets.SUBMISSIONS_TOKEN || github.token }}
+          path: submissions
+          fetch-depth: 0   # full history: who uploaded each file and when
+
       - name: Set up Python
+        if: steps.check.outputs.changed == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: "pip"
+
       - name: Install dependencies
+        if: steps.check.outputs.changed == 'true'
         run: python -m pip install -r requirements.txt
-      - name: Discover all tracked submissions
-        id: submissions
-        shell: bash
-        run: |
-          python scripts/find_submissions.py "" "${{ github.sha }}" > all_submissions.txt
-          echo "All submissions selected for a complete milestone report:"
-          cat all_submissions.txt
-          if [ -s all_submissions.txt ]; then
-            echo "found=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "found=false" >> "$GITHUB_OUTPUT"
-          fi
-      - name: Evaluate all project/milestone submissions
-        if: steps.submissions.outputs.found == 'true'
+
+      - name: Evaluate new submissions only
+        if: steps.check.outputs.changed == 'true'
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: python -m evaluator.run_evaluations --files-from all_submissions.txt --output-dir evaluation-reports
-      - name: Upload evaluation reports
-        if: always() && steps.submissions.outputs.found == 'true'
+          FORCE_PATH: ${{ github.event.inputs.force_path }}
+          REBUILD_ONLY: ${{ github.event.inputs.rebuild_only }}
+        run: |
+          ARGS=(--submissions-root submissions)
+          if [ "$REBUILD_ONLY" = "true" ]; then ARGS+=(--rebuild-only); fi
+          if [ -n "$FORCE_PATH" ]; then ARGS+=(--force "$FORCE_PATH"); fi
+          python -m evaluator.run_evaluations "${ARGS[@]}"
+
+      - name: Publish scores and dashboard to submissions repo
+        if: always() && steps.check.outputs.changed == 'true' && steps.cfg.outputs.publish == 'true'
+        env:
+          BRANCH: ${{ steps.cfg.outputs.branch }}
+        run: |
+          cd submissions
+          rm -rf evaluation-results && mkdir -p evaluation-results
+          cp ../evaluation-results/SCORES.md ../evaluation-results/index.html ../evaluation-results/data.json evaluation-results/ 2>/dev/null || true
+          cp -r ../evaluation-results/feedback evaluation-results/ 2>/dev/null || true
+          git config user.name  "ai-evaluator-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A evaluation-results
+          if git diff --cached --quiet; then echo "Nothing new to publish."; exit 0; fi
+          git commit -m "Update evaluation results"
+          for i in 1 2 3 4 5; do
+            git pull --rebase --no-edit origin "$BRANCH" && git push origin "HEAD:$BRANCH" && exit 0
+            echo "Push failed (attempt $i), retrying..."; sleep $((i * 5))
+          done
+          echo "::error::Could not publish results to the submissions repo. Does SUBMISSIONS_TOKEN have Contents: Read and write?"
+          exit 1
+
+      - name: Remember last checked submissions commit
+        if: always() && steps.check.outputs.changed == 'true'
+        run: |
+          mkdir -p evaluation-results
+          git -C submissions rev-parse HEAD > evaluation-results/.last_submissions_commit
+
+      - name: Save results in evaluator repo
+        if: always() && steps.check.outputs.changed == 'true'
+        run: |
+          git config user.name  "ai-evaluator-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add evaluation-results
+          if git diff --cached --quiet; then echo "No result changes."; exit 0; fi
+          git commit -m "Evaluation results update [skip ci]"
+          for i in 1 2 3 4 5; do
+            git pull --rebase --no-edit origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            echo "Push failed (attempt $i), retrying..."; sleep $((i * 5))
+          done
+          exit 1
+
+      - name: Comment score on each participant's upload
+        if: always() && steps.check.outputs.changed == 'true' && steps.cfg.outputs.publish == 'true'
+        uses: actions/github-script@v7
+        env:
+          REPO: ${{ steps.cfg.outputs.repo }}
+          BRANCH: ${{ steps.cfg.outputs.branch }}
+        with:
+          github-token: ${{ secrets.SUBMISSIONS_TOKEN || github.token }}
+          script: |
+            const fs = require('fs');
+            const file = `${process.env.RUNNER_TEMP}/new_results.json`;
+            if (!fs.existsSync(file)) return;
+            const [owner, repo] = process.env.REPO.split('/');
+            const base = `https://github.com/${owner}/${repo}/blob/${process.env.BRANCH}`;
+            for (const r of JSON.parse(fs.readFileSync(file, 'utf8'))) {
+              if (!r.commit) continue;
+              const body = [
+                `### 🤖 AI Evaluation — ${r.participant}`,
+                `**${r.milestone.replace('_', ' ')}** · ${r.project}`,
+                ``,
+                `## Score: ${r.total} / ${r.maximum}`,
+                ``,
+                `📄 Your feedback: ${base}/${r.feedback_file}`,
+                `📊 All scores: ${base}/evaluation-results/SCORES.md`,
+                ``,
+                `_Evaluated once; this score is recorded. AI-generated, subject to instructor review._`
+              ].join('\n');
+              try { await github.rest.repos.createCommitComment({ owner, repo, commit_sha: r.commit, body }); }
+              catch (e) { core.warning(`Could not comment on ${r.commit}: ${e.message}`); }
+            }
+
+      - name: Upload Excel reports
+        if: always() && steps.check.outputs.changed == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: evaluation-reports-${{ github.run_number }}
-          path: evaluation-reports/
-          if-no-files-found: warn
+          path: evaluation-results/reports/
+          if-no-files-found: ignore
           retention-days: 90
