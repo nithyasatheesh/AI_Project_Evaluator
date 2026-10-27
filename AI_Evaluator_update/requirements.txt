@@ -1,0 +1,6 @@
+openai
+pandas
+openpyxl
+nbformat
+python-docx
+pypdf
