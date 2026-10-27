@@ -217,6 +217,10 @@ def rebuild_outputs(ledger, config=None):
         write_reports(entry["result"], entry["path"], reports_dir)
     (RESULTS_DIR / "SCORES.md").write_text(scores_markdown(ledger), encoding="utf-8")
     write_dashboard(ledger, config or {}, RESULTS_DIR)
+    # Keep a copy of the full dashboard next to the Excel reports so it can be downloaded the same way.
+    if (RESULTS_DIR / "index.html").exists():
+        reports_dir.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(RESULTS_DIR / "index.html", reports_dir / "Cohort-Dashboard.html")
 
 
 def write_run_summary(new_entries, skipped, errors):
