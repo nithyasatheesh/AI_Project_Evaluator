@@ -40,12 +40,18 @@ To evaluate immediately instead of waiting: **Actions → Evaluate Participant S
    - `SUBMISSIONS_TOKEN` (the token from step 3)
 5. In **this** repo: Settings → Actions → General → Workflow permissions → **Read and write permissions**.
 
-## HTML dashboard
+## Dashboards
 
-`evaluation-results/index.html` is regenerated on every run. It works three ways:
-- open it from a downloaded copy (data is embedded),
-- enable **GitHub Pages** on the submissions repo (Settings → Pages → Deploy from branch → `main` / root) and open `https://<owner>.github.io/<submissions-repo>/evaluation-results/` — it reads `data.json` live,
-- view `SCORES.md` directly in GitHub.
+**Instructor (private, this repo):** `evaluation-results/index.html` — full cohort view: score bands, milestone progress, rubric-criterion averages, sortable participant × milestone table, per-participant feedback, problems to fix. Download and open it, or use the Streamlit app below.
+
+**Participants (published to the submissions repo):** controlled by `participant_view` in `config.json`:
+- `"personal"` (default) — a **"My results" page**: the participant picks their name and sees only their own milestone scores, how they compare with the cohort average, and criterion-by-criterion feedback. No leaderboard or names list of scores.
+- `"leaderboard"` — publish the full cohort dashboard and `SCORES.md` instead.
+
+To give participants a link: in the submissions repo, Settings → Pages → Deploy from branch → `main` / `(root)` → Save. Then set
+`participant_dashboard_url` in `config.json` to `https://<owner>.github.io/<submissions-repo>`. Each participant's commit comment will then link straight to their own page (`.../evaluation-results/#their-name`).
+
+> GitHub Pages sites can be opened by anyone with the link (on free plans Pages needs a public repo). The personal page doesn't list everyone's scores, but the underlying `data.json` and feedback files are readable by anyone who can read the submissions repo. For strictly private scores, set `publish_results_to_submissions_repo` to `false` and share results yourself.
 
 ## Streamlit app
 
@@ -53,7 +59,7 @@ To evaluate immediately instead of waiting: **Actions → Evaluate Participant S
 pip install -r dashboard/requirements.txt
 streamlit run dashboard/app.py
 ```
-Reads the same `data.json`: leaderboard with milestone columns, participant feedback with criterion bars, charts.
+Instructor app. Reads the same `data.json`: leaderboard with milestone columns, participant feedback with criterion bars, charts.
 To host on Streamlit Community Cloud, deploy `dashboard/app.py` and set the secret
 `DATA_URL = "https://raw.githubusercontent.com/<owner>/<submissions-repo>/main/evaluation-results/data.json"`
 (add `GITHUB_TOKEN` too if the submissions repo is private).

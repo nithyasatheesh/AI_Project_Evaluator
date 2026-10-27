@@ -48,6 +48,8 @@ jobs:
               f.write(f"repo={repo}\n")
               f.write(f"branch={c.get('submissions_branch', 'main')}\n")
               f.write(f"publish={'true' if c.get('publish_results_to_submissions_repo', True) else 'false'}\n")
+              f.write(f"view={c.get('participant_view', 'personal')}\n")
+              f.write(f"dashboard_url={c.get('participant_dashboard_url', '')}\n")
           EOF
 
       - name: Check submissions repo for new uploads
@@ -108,10 +110,17 @@ jobs:
         if: always() && steps.check.outputs.changed == 'true' && steps.cfg.outputs.publish == 'true'
         env:
           BRANCH: ${{ steps.cfg.outputs.branch }}
+          VIEW: ${{ steps.cfg.outputs.view }}
         run: |
           cd submissions
           rm -rf evaluation-results && mkdir -p evaluation-results
-          cp ../evaluation-results/SCORES.md ../evaluation-results/index.html ../evaluation-results/data.json evaluation-results/ 2>/dev/null || true
+          if [ "$VIEW" = "leaderboard" ]; then
+            # Everyone sees the full cohort dashboard and SCORES.md
+            cp ../evaluation-results/SCORES.md ../evaluation-results/index.html ../evaluation-results/data.json evaluation-results/
+          else
+            # Personal "My results" page only; the cohort dashboard stays in the evaluator repo
+            cp ../evaluation-results/participant/index.html ../evaluation-results/participant/data.json evaluation-results/
+          fi
           cp -r ../evaluation-results/feedback evaluation-results/ 2>/dev/null || true
           git config user.name  "ai-evaluator-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -151,6 +160,8 @@ jobs:
         env:
           REPO: ${{ steps.cfg.outputs.repo }}
           BRANCH: ${{ steps.cfg.outputs.branch }}
+          VIEW: ${{ steps.cfg.outputs.view }}
+          DASHBOARD_URL: ${{ steps.cfg.outputs.dashboard_url }}
         with:
           github-token: ${{ secrets.SUBMISSIONS_TOKEN || github.token }}
           script: |
@@ -168,7 +179,9 @@ jobs:
                 `## Score: ${r.total} / ${r.maximum}`,
                 ``,
                 `📄 Your feedback: ${base}/${r.feedback_file}`,
-                `📊 All scores: ${base}/evaluation-results/SCORES.md`,
+                process.env.DASHBOARD_URL
+                  ? `📊 Your dashboard: ${process.env.DASHBOARD_URL.replace(/\/$/, '')}/evaluation-results/#${r.pid}`
+                  : (process.env.VIEW === 'leaderboard' ? `📊 All scores: ${base}/evaluation-results/SCORES.md` : ''),
                 ``,
                 `_Evaluated once; this score is recorded. AI-generated, subject to instructor review._`
               ].join('\n');

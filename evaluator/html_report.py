@@ -9,6 +9,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 TEMPLATE = Path(__file__).with_name("dashboard_template.html")
+PARTICIPANT_TEMPLATE = Path(__file__).with_name("participant_template.html")
 
 PROJECT_WORDS = (
     "loan_default", "loan", "default", "retail_customer_purchase", "retail_purchase", "retail", "purchase",
@@ -33,6 +34,10 @@ def person_name(path, submitted_by=""):
     if keep:
         return " ".join(w if w.isupper() else w.capitalize() for w in keep)
     return submitted_by or stem
+
+
+def person_id(name):
+    return re.sub(r"[^a-z0-9]+", "-", str(name).lower()).strip("-")
 
 
 def band(avg):
@@ -68,7 +73,7 @@ def build_data(ledger, config, results_dir=Path("evaluation-results")):
             continue
         m = mnum.group(1)
         name = person_name(key, e.get("submitted_by", ""))
-        pid = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-") or key
+        pid = person_id(name) or key
         p = people.setdefault(pid, {"id": pid, "name": name, "submittedBy": e.get("submitted_by", ""),
                                     "milestones": {}, "projects": []})
         total, maximum = r.get("total_marks", 0), r.get("maximum_marks", 100) or 100
@@ -108,8 +113,8 @@ def build_data(ledger, config, results_dir=Path("evaluation-results")):
     }
 
 
-def render_html(data):
-    inner = TEMPLATE.read_text(encoding="utf-8")
+def render_html(data, template=TEMPLATE):
+    inner = Path(template).read_text(encoding="utf-8")
     blob = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
     inner = inner.replace("__DATA__", blob, 1)
     # Template is body content (title/meta/style first); lift the head parts into <head>.
@@ -120,10 +125,26 @@ def render_html(data):
             + head + '\n</head>\n<body>' + body + "\n</body>\n</html>\n")
 
 
+def participant_data(data):
+    """Copy for the shared repo: no instructor-only fields (errors, GitHub usernames)."""
+    out = json.loads(json.dumps(data))
+    out["errors"] = []
+    for p in out["participants"]:
+        p.pop("submittedBy", None)
+    return out
+
+
 def write_dashboard(ledger, config, results_dir=Path("evaluation-results")):
+    """Instructor dashboard -> evaluation-results/index.html (stays private).
+    Participant 'My results' page -> evaluation-results/participant/index.html (published)."""
     results_dir = Path(results_dir)
     results_dir.mkdir(parents=True, exist_ok=True)
     data = build_data(ledger, config, results_dir)
     (results_dir / "data.json").write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     (results_dir / "index.html").write_text(render_html(data), encoding="utf-8")
+    pdir = results_dir / "participant"
+    pdir.mkdir(exist_ok=True)
+    pdata = participant_data(data)
+    (pdir / "data.json").write_text(json.dumps(pdata, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    (pdir / "index.html").write_text(render_html(pdata, PARTICIPANT_TEMPLATE), encoding="utf-8")
     return data

@@ -11,7 +11,7 @@ from evaluator.core import SUPPORTED, collect_submission, evaluate, load_problem
 from evaluator.ledger import (LEDGER_PATH, RESULTS_DIR, file_sha256, load_ledger, needs_evaluation,
                               now_iso, save_ledger, submitter_info)
 from evaluator.report_generator import write_reports
-from evaluator.html_report import write_dashboard
+from evaluator.html_report import person_id, person_name, write_dashboard
 
 SUBMISSION_ROOTS = (
     "Submission-Milestone1",
@@ -241,7 +241,8 @@ def write_run_summary(new_entries, skipped, errors):
         json.dumps([{"path": e["path"], "participant": e["participant"], "commit": e.get("commit", ""),
                      "milestone": e["result"].get("milestone_id"), "project": e["result"].get("project_id"),
                      "total": e["result"].get("total_marks"), "maximum": e["result"].get("maximum_marks"),
-                     "feedback_file": e.get("feedback_file", "")} for e in new_entries], indent=2),
+                     "feedback_file": e.get("feedback_file", ""),
+                     "pid": person_id(person_name(e["path"], e.get("submitted_by", "")))} for e in new_entries], indent=2),
         encoding="utf-8")
 
 

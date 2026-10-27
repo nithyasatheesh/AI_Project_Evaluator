@@ -34,8 +34,8 @@ Use the **same name** for every milestone so your scores line up on the dashboar
 
 ## Your score
 
-- A comment with your score appears on your upload commit (open the commit from the repo's **commits** list).
-- Detailed feedback: `evaluation-results/feedback/`
-- All scores: `evaluation-results/SCORES.md`
+- A comment with your score and a link to your dashboard appears on your upload commit (open it from the repo's **commits** list).
+- **My results page:** open the dashboard link from your instructor, choose your name, and bookmark it.
+- Detailed feedback files: `evaluation-results/feedback/`
 
 Your first upload for a milestone is the one that is scored. Check your notebook before uploading.
