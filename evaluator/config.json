@@ -1,0 +1,37 @@
+{
+  "model": "gpt-4.1-mini",
+  "resubmission_policy": "lock",
+  "max_file_chars": 18000,
+  "max_total_chars": 45000,
+  "default_project": "Loan_Default",
+  "default_milestone": "Milestone_1",
+  "projects": {
+    "Loan_Default": {
+      "problem_statement": "problem_statements/Loan_Default.md",
+      "rubrics": {
+        "Milestone_1": "rubrics/Loan_Default/milestone_1_rubric.json",
+        "Milestone_2": "rubrics/Loan_Default/milestone_2_rubric.json",
+        "Milestone_3": "rubrics/Loan_Default/milestone_3_rubric.json",
+        "Milestone_4": "rubrics/Loan_Default/milestone_4_rubric.json"
+      }
+    },
+    "Retail_Customer_Purchase": {
+      "problem_statement": "problem_statements/Retail_Customer_Purchase.md",
+      "rubrics": {
+        "Milestone_1": "rubrics/retail_purchase/milestone_1.json",
+        "Milestone_2": "rubrics/retail_purchase/milestone_2.json",
+        "Milestone_3": "rubrics/retail_purchase/milestone_3.json",
+        "Milestone_4": "rubrics/retail_purchase/milestone_4.json"
+      }
+    },
+    "Healthcare_Liver_Disease": {
+      "problem_statement": "problem_statements/Healthcare_Liver_Disease.md",
+      "rubrics": {
+        "Milestone_1": "rubrics/healthcare/milestone_1.json",
+        "Milestone_2": "rubrics/healthcare/milestone_2.json",
+        "Milestone_3": "rubrics/healthcare/milestone_3.json",
+        "Milestone_4": "rubrics/healthcare/milestone_4.json"
+      }
+    }
+  }
+}
