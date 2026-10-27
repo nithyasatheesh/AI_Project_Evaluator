@@ -1,0 +1,1429 @@
+{
+  "version": 1,
+  "submissions": {
+    "Submission-Milestone1/Participant_M1_01_retail_purchase_strong.ipynb": {
+      "path": "Submission-Milestone1/Participant_M1_01_retail_purchase_strong.ipynb",
+      "participant": "Participant_M1_01",
+      "sha256": "caaedd75663743f0f39c93255e0595da18bb559d772262ccf5b08b4d8cb5630a",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:43:42+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Retail_Customer_Purchase",
+        "milestone_id": "Milestone_1",
+        "criteria": [
+          {
+            "name": "Data Understanding & Quality Checks",
+            "max_marks": 20,
+            "marks_awarded": 18,
+            "evidence": "The submission loads user_demographics.csv and User_product_purchase_details.csv, prints shapes and dtypes, performs a left join on User_ID with validate='many_to_one', reports joined shape, missing values, and duplicate rows. It inspects missingness and confirms no duplicates. The join cardinality is checked with validate parameter. Target meaning is acknowledged.",
+            "feedback": "Strong data loading and join validation with missingness and duplicates checked. Could improve by deeper schema inspection (e.g., unique keys in demographics, purchase) and more detailed missingness patterns or data type validations."
+          },
+          {
+            "name": "Exploratory Data Analysis (EDA)",
+            "max_marks": 20,
+            "marks_awarded": 17,
+            "evidence": "The submission provides descriptive statistics and histogram for Purchase amount, and groupby aggregations (count, mean, median) for Gender, Age, City_Category, Product_Category_1. It avoids treating category codes as numeric. Plots and tables are shown with interpretation prompts.",
+            "feedback": "Good coverage of target distribution and categorical group differences with visual and tabular summaries. Could improve by including outlier detection, bivariate plots, or more detailed pattern interpretations."
+          },
+          {
+            "name": "Data Cleaning & Feature Engineering",
+            "max_marks": 20,
+            "marks_awarded": 16,
+            "evidence": "The submission excludes User_ID and Product_ID from features to avoid leakage. It uses train/test split and fits preprocessing only on training data. Missing values in numeric columns are imputed with median; categorical with most frequent; categorical variables are one-hot encoded. No fabricated columns or leakage evident.",
+            "feedback": "Appropriate missing value treatment and encoding with leakage prevention. No explicit new feature engineering beyond encoding. Could improve by justifying imputation choices or exploring feature creation from existing data."
+          },
+          {
+            "name": "Linear Model Building",
+            "max_marks": 20,
+            "marks_awarded": 19,
+            "evidence": "A reproducible baseline Linear Regression model is built using a pipeline with preprocessing fitted only on training data. Data split is 80/20 with random_state=42. The model is fit and predictions made on test set. Code is clear and assumptions documented.",
+            "feedback": "Well-structured baseline model with proper data splitting and pipeline usage. Could improve by documenting assumptions about linearity or feature relevance more explicitly."
+          },
+          {
+            "name": "Evaluation & Findings",
+            "max_marks": 20,
+            "marks_awarded": 17,
+            "evidence": "MAE, RMSE, and R² are computed and printed on holdout data. Findings mention not fabricating improvements and excluding IDs from features. Limitations note checking unmatched demographics. No unsupported claims or causation implied.",
+            "feedback": "Evaluation metrics are correctly reported and limitations acknowledged. Could improve by interpreting error magnitudes in business context and discussing model limitations more thoroughly."
+          }
+        ],
+        "strengths": [
+          "Comprehensive data loading and join validation with missingness and duplicates checked.",
+          "Clear and appropriate exploratory data analysis with visualizations and group summaries.",
+          "Proper data cleaning and preprocessing pipeline with leakage prevention.",
+          "Reproducible baseline linear regression model with train/test split and pipeline.",
+          "Correct reporting of evaluation metrics and cautious interpretation without unsupported claims."
+        ],
+        "areas_for_improvement": [
+          "Deeper schema inspection and detailed missingness pattern analysis.",
+          "More extensive EDA including outlier detection and bivariate relationships.",
+          "Justification and exploration of feature engineering beyond encoding.",
+          "Explicit documentation of modeling assumptions and feature relevance.",
+          "More detailed interpretation of evaluation metrics in business terms and model limitations."
+        ],
+        "overall_feedback": "The submission meets the milestone 1 requirements well, demonstrating solid data understanding, exploratory analysis, cleaning, baseline modeling, and evaluation. It avoids common pitfalls such as leakage and unsupported claims. To strengthen the work, deeper data quality insights, richer EDA, and more thorough interpretation of results and limitations are recommended. The notebook is well organized and reproducible, supporting human review.",
+        "human_review_required": true,
+        "total_marks": 87,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_1/Participant_M1_01_retail_purchase_strong.md"
+    },
+    "Submission-Milestone1/Participant_M1_02_healthcare_strong.ipynb": {
+      "path": "Submission-Milestone1/Participant_M1_02_healthcare_strong.ipynb",
+      "participant": "Participant_M1_02",
+      "sha256": "45c536c9dd96b0d1928c3f41997bf316d2357974bf2137dfdc1f775dc91c92ab",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:43:50+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Healthcare_Liver_Disease",
+        "milestone_id": "Milestone_1",
+        "criteria": [
+          {
+            "name": "Data Understanding & Quality Checks",
+            "max_marks": 20,
+            "marks_awarded": 18,
+            "evidence": "The submission loads patient and status data, inspects shapes and data types, checks missing values and duplicates, and verifies patient ID columns before joining. The target mapping 1= Liver Patient and 2= Non-Liver Patient is confirmed and applied correctly. However, no explicit mention of lookup tables or other supplied files (Cityname_statecode.xlsx, Statecode_name.xlsx, Healthcare_Education_Text.csv) is made, nor detailed inspection of identifiers beyond ID column.",
+            "feedback": "Good data loading and initial quality checks including missingness and duplicates. To improve, explicitly inspect and join all relevant lookup tables and confirm all identifiers and target coding from all supplied files as per brief."
+          },
+          {
+            "name": "Exploratory Data Analysis (EDA)",
+            "max_marks": 20,
+            "marks_awarded": 17,
+            "evidence": "The submission analyzes target balance with value counts and plots histograms with KDE for key clinical features (Age, TB, DB, Alkphos, Sgpt, Sgot, TP, ALB, A/G Ratio). It avoids unsupported clinical interpretations and notes that extreme values require clinical investigation rather than automatic deletion.",
+            "feedback": "Strong use of appropriate plots and statistics for EDA. Could be improved by including more detailed numeric summaries (means, medians, IQRs) and exploring relationships between features and target with stratified plots or boxplots."
+          },
+          {
+            "name": "Data Cleaning & Feature Engineering",
+            "max_marks": 20,
+            "marks_awarded": 15,
+            "evidence": "The submission excludes ID from features, handles missing values using median imputation for numeric and most frequent for categorical features, and applies scaling and one-hot encoding. Outliers are acknowledged but not removed automatically, which is appropriate. No explicit feature engineering beyond encoding is shown.",
+            "feedback": "Appropriate leakage-aware preprocessing and missing value handling. To improve, include explicit outlier detection and justification, and attempt feature engineering such as interaction terms or domain-informed transformations."
+          },
+          {
+            "name": "Linear Model Building",
+            "max_marks": 20,
+            "marks_awarded": 19,
+            "evidence": "A logistic regression baseline model is built using a pipeline with preprocessing fitted only on training data. Stratified train-test split is used. Class weighting is applied to address imbalance. The code is reproducible and well-structured.",
+            "feedback": "Well-executed baseline model with proper splitting and preprocessing. Minor improvement could be to report hyperparameter tuning or cross-validation results if done."
+          },
+          {
+            "name": "Evaluation & Findings",
+            "max_marks": 20,
+            "marks_awarded": 18,
+            "evidence": "The submission reports confusion matrix, classification report including precision, recall, F1, and ROC-AUC score. It discusses false negatives, class balance, limitations, and emphasizes educational use and need for clinical judgement. No fabricated metrics or claims of code execution are made.",
+            "feedback": "Comprehensive evaluation with appropriate metrics and responsible interpretation. Could be enhanced by more detailed discussion of false negative impact and potential bias."
+          }
+        ],
+        "strengths": [
+          "Clear and reproducible data loading and preprocessing pipeline.",
+          "Appropriate and well-executed exploratory data analysis with relevant plots.",
+          "Proper leakage-aware handling of missing data and categorical encoding.",
+          "Baseline logistic regression model built with stratified splitting and class weighting.",
+          "Comprehensive evaluation metrics reported with responsible interpretation and safety considerations."
+        ],
+        "areas_for_improvement": [
+          "Explicit inspection and joining of all supplied lookup tables and verification of all identifiers.",
+          "More detailed numeric summaries and stratified EDA to explore feature-target relationships.",
+          "Additional feature engineering and explicit outlier analysis with justification.",
+          "Inclusion of hyperparameter tuning or cross-validation for baseline model robustness.",
+          "Deeper discussion on false negatives, bias, and limitations."
+        ],
+        "overall_feedback": "The submission meets the milestone 1 requirements well, demonstrating solid data understanding, EDA, preprocessing, baseline modeling, and evaluation with responsible interpretation. It shows good awareness of safety and educational constraints. To fully meet the brief, it should incorporate all supplied lookup tables and identifiers, enhance EDA with stratified analyses, and include more feature engineering and model tuning details. Overall, this is a strong and careful Milestone 1 submission suitable for educational decision support.",
+        "human_review_required": true,
+        "total_marks": 87,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_1/Participant_M1_02_healthcare_strong.md"
+    },
+    "Submission-Milestone1/Participant_M1_03_loan_default_medium.ipynb": {
+      "path": "Submission-Milestone1/Participant_M1_03_loan_default_medium.ipynb",
+      "participant": "Participant_M1_03",
+      "sha256": "8960004d82d0134a3e727ae9958b93089e35343283e4787c22a746befd38bec5",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:43:55+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Loan_Default",
+        "milestone_id": "Milestone_1",
+        "criteria": [
+          {
+            "name": "Data Understanding & Quality Checks",
+            "max_marks": 20,
+            "marks_awarded": 10,
+            "evidence": "The notebook inspects dataset shape, columns, data types, missing values, and duplicate rows with code and outputs. It explicitly checks for the target column presence and warns to verify target encoding before proceeding.",
+            "feedback": "Good initial data profiling and quality checks are present, including missingness and duplicates. However, no detailed analysis of inconsistent values or data-quality risks is shown. The target variable is not set or analyzed, limiting completeness."
+          },
+          {
+            "name": "Exploratory Data Analysis (EDA)",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "No univariate or bivariate analysis, plots, or class balance exploration is performed. The notebook states that EDA is still required.",
+            "feedback": "No EDA is conducted or presented. Visualizations and explanations of patterns relevant to loan default are missing."
+          },
+          {
+            "name": "Data Cleaning & Feature Engineering",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "No missing-value handling, encoding, scaling, or feature engineering is performed. The notebook only includes placeholders and comments about future cleaning steps.",
+            "feedback": "Data cleaning and feature engineering are not implemented. No rationale or leakage prevention is demonstrated."
+          },
+          {
+            "name": "Linear Model Building",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "No logistic regression model is trained or evaluated. Only commented example code is provided for train/test split and model fitting after target verification.",
+            "feedback": "No baseline linear model is built or validated. The notebook lacks actual model training or assumptions."
+          },
+          {
+            "name": "Evaluation & Findings",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "No confusion matrix, precision, recall, F1, ROC-AUC, or interpretation is presented. The notebook explicitly states metrics are not claimed without running the analysis.",
+            "feedback": "No evaluation metrics or findings are reported. No interpretation or limitations are discussed."
+          }
+        ],
+        "strengths": [
+          "Initial data loading and profiling steps are clearly coded and documented.",
+          "Explicit caution about verifying target variable and dataset before modeling.",
+          "Clear indication of current limitations and next steps."
+        ],
+        "areas_for_improvement": [
+          "Set and verify the target variable before proceeding with analysis.",
+          "Perform and document thorough EDA with visualizations and class balance analysis.",
+          "Implement data cleaning, missing value handling, and feature engineering with rationale.",
+          "Build and evaluate a logistic regression baseline model with train/test split.",
+          "Report relevant classification metrics and interpret results with limitations."
+        ],
+        "overall_feedback": "This submission provides a well-structured initial notebook with data loading and quality checks but does not progress beyond preliminary inspection. Key Milestone 1 requirements such as EDA, data cleaning, baseline modeling, and evaluation metrics are missing or only outlined as future work. The submission is a good starting template but incomplete for Milestone 1 expectations.",
+        "human_review_required": true,
+        "total_marks": 10,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_1/Participant_M1_03_loan_default_medium.md"
+    },
+    "Submission-Milestone1/Participant_M1_04_retail_purchase_medium.ipynb": {
+      "path": "Submission-Milestone1/Participant_M1_04_retail_purchase_medium.ipynb",
+      "participant": "Participant_M1_04",
+      "sha256": "2e33b0af19d35de139c7037c208577cbf42605426108827358ec0d1282601735",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:44:04+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Retail_Customer_Purchase",
+        "milestone_id": "Milestone_1",
+        "criteria": [
+          {
+            "name": "Data Understanding & Quality Checks",
+            "max_marks": 20,
+            "marks_awarded": 18,
+            "evidence": "The submission loads demographics and purchase data, prints shapes and dtypes, performs a left join on User_ID with validate='many_to_one', reports joined shape, missing values, and duplicate rows. It inspects data types and missingness but does not explicitly check key uniqueness beyond the merge validation or detailed join cardinality statistics.",
+            "feedback": "Good inspection of schemas, data types, missingness, and duplicates with a validated join. Could improve by explicitly reporting uniqueness of keys in each dataset, detailed join cardinality counts, and more thorough missingness patterns."
+          },
+          {
+            "name": "Exploratory Data Analysis (EDA)",
+            "max_marks": 20,
+            "marks_awarded": 16,
+            "evidence": "The submission provides summary statistics and a histogram of the Purchase target variable. It groups purchase amounts by Gender, Age, City_Category, and Product_Category_1, showing count, mean, and median. It cautions against interpreting category codes as numeric quantities. However, there is limited interpretation of outliers or deeper pattern insights.",
+            "feedback": "Solid basic EDA with relevant plots and group summaries. Interpretation is minimal and could be enhanced by discussing outliers, distribution skewness, or notable patterns in customer/product groups."
+          },
+          {
+            "name": "Data Cleaning & Feature Engineering",
+            "max_marks": 20,
+            "marks_awarded": 17,
+            "evidence": "The submission excludes User_ID and Product_ID from features to avoid leakage, converts target to numeric with coercion, drops rows with missing target, and uses median imputation for numeric and most frequent for categorical features. One-hot encoding is applied to categorical variables. The train/test split is done before fitting preprocessing to avoid leakage.",
+            "feedback": "Appropriate missing value treatment and encoding with leakage prevention. No explicit feature engineering beyond encoding is shown. Justification for imputation strategies is implicit but could be more explicit. No discussion on handling outliers or feature creation."
+          },
+          {
+            "name": "Linear Model Building",
+            "max_marks": 20,
+            "marks_awarded": 19,
+            "evidence": "A reproducible baseline linear regression model is built using a pipeline with preprocessing fit only on training data. The train/test split is random with fixed seed. The model is fit and predictions made on test data. The code is clear and assumptions are documented (e.g., exclusion of IDs).",
+            "feedback": "Well-structured baseline model with proper data splitting and preprocessing. Could improve by documenting assumptions about linearity or feature distributions explicitly."
+          },
+          {
+            "name": "Evaluation & Findings",
+            "max_marks": 20,
+            "marks_awarded": 15,
+            "evidence": "MAE, RMSE, and R² are computed and printed on test data. The submission notes to record actual metric values after running and avoid unsupported claims. It mentions checking unmatched demographics and excluding IDs from features. However, interpretation of error metrics and business implications is minimal, and limitations are only briefly noted.",
+            "feedback": "Metrics are correctly reported on holdout data with caution against unsupported claims. Interpretation of results and business insights is limited and should be expanded. Limitations are acknowledged but not deeply discussed."
+          }
+        ],
+        "strengths": [
+          "Clear and reproducible data loading, joining, and validation steps.",
+          "Proper train/test split with preprocessing fit only on training data to prevent leakage.",
+          "Baseline linear regression model built with standard metrics reported.",
+          "Basic EDA with relevant plots and group summaries.",
+          "Exclusion of identifiers from features to avoid leakage."
+        ],
+        "areas_for_improvement": [
+          "More detailed data quality checks including key uniqueness and join cardinality statistics.",
+          "Deeper EDA interpretation including outlier analysis and pattern insights.",
+          "Explicit justification for cleaning choices and more feature engineering.",
+          "Expanded interpretation of evaluation metrics with business context.",
+          "More thorough discussion of limitations and potential biases."
+        ],
+        "overall_feedback": "The submission meets the core requirements of Milestone 1 by loading and joining datasets with validation, performing basic EDA, cleaning data with justified preprocessing, building a reproducible linear regression baseline, and reporting standard evaluation metrics on holdout data. It demonstrates good practices such as leakage prevention and cautious interpretation. However, it lacks depth in data quality analysis, EDA interpretation, feature engineering, and evaluation discussion. Strengthening these areas would improve the rigor and business relevance of the analysis. Human review is recommended to verify dataset handling and metric correctness.",
+        "human_review_required": true,
+        "total_marks": 85,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_1/Participant_M1_04_retail_purchase_medium.md"
+    },
+    "Submission-Milestone1/Participant_M1_05_healthcare_weak.ipynb": {
+      "path": "Submission-Milestone1/Participant_M1_05_healthcare_weak.ipynb",
+      "participant": "Participant_M1_05",
+      "sha256": "2d8f3e41208ac778819c457d1f41289d794984c53ea5fd675a8c31a0777479e1",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:44:10+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Healthcare_Liver_Disease",
+        "milestone_id": "Milestone_1",
+        "criteria": [
+          {
+            "name": "Data Understanding & Quality Checks",
+            "max_marks": 20,
+            "marks_awarded": 5,
+            "evidence": "The submission loads the patient data and status files, prints shapes and data types, and displays initial rows. It notes the target mapping from the brief (1 = Liver Patient, 2 = Non-Liver Patient) and excludes ID from features. However, no detailed inspection of missingness, duplicates, join keys verification, or data quality beyond initial shape and dtypes is provided.",
+            "feedback": "Basic data loading and initial inspection are present, but deeper quality checks such as missing values, duplicates, join key validation, and target code verification are missing. Include these checks with summary statistics and explicit confirmation of target mapping."
+          },
+          {
+            "name": "Exploratory Data Analysis (EDA)",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "No EDA plots, target balance analysis, or clinical feature distribution statistics are present. The submission states that detailed cleaning and baseline evaluation remain incomplete.",
+            "feedback": "No evidence of EDA is provided. Include target distribution analysis, summary statistics, and visualizations (e.g., histograms, boxplots) for clinical features to understand data patterns."
+          },
+          {
+            "name": "Data Cleaning & Feature Engineering",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "No handling of missing values, outliers, categorical encoding, or feature engineering is shown. The submission explicitly states that cleaning and evaluation are incomplete.",
+            "feedback": "No data cleaning or feature engineering steps are demonstrated. Implement missing value treatment, outlier detection/handling, and exclude identifiers from features to prevent leakage."
+          },
+          {
+            "name": "Linear Model Building",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "No model building or training is shown. The submission mentions Logistic Regression baseline as a milestone goal but does not provide any code or results.",
+            "feedback": "No baseline model is built or evaluated. Develop a reproducible Logistic Regression model with stratified train-test split and preprocessing fitted only on training data."
+          },
+          {
+            "name": "Evaluation & Findings",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "No evaluation metrics, confusion matrix, or discussion of false negatives and limitations are provided. The submission notes that results and evaluation are not recorded.",
+            "feedback": "Evaluation metrics and findings are missing. Report confusion matrix, precision, recall, F1, ROC-AUC, and discuss false negatives and educational limitations."
+          }
+        ],
+        "strengths": [
+          "Correctly loads and displays initial data files.",
+          "Acknowledges the target mapping and exclusion of ID from features.",
+          "Clear statement of milestone objectives and scope."
+        ],
+        "areas_for_improvement": [
+          "Perform comprehensive data quality checks including missingness, duplicates, and join key validation.",
+          "Conduct thorough EDA with visualizations and statistical summaries.",
+          "Implement data cleaning and feature engineering steps transparently.",
+          "Build and evaluate a Logistic Regression baseline model with proper validation.",
+          "Report evaluation metrics and discuss findings, limitations, and false negatives."
+        ],
+        "overall_feedback": "This submission provides only the initial data loading and very basic inspection without progressing into the required analyses, modeling, or evaluation for Milestone 1. To meet the milestone requirements, the participant must complete detailed data quality checks, exploratory data analysis, data cleaning, baseline model building, and evaluation with appropriate metrics and discussion. The current evidence is insufficient to award marks beyond minimal credit for initial data understanding. Further work is needed to demonstrate competency in all Milestone 1 criteria.",
+        "human_review_required": true,
+        "total_marks": 5,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_1/Participant_M1_05_healthcare_weak.md"
+    },
+    "Submission-Milestone2/Participant_M2_01_healthcare_strong.ipynb": {
+      "path": "Submission-Milestone2/Participant_M2_01_healthcare_strong.ipynb",
+      "participant": "Participant_M2_01",
+      "sha256": "54d20a67aee3e091ff0bed49811ec149e481c2f8a67cd2946589eef8eb807e1d",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:44:21+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Healthcare_Liver_Disease",
+        "milestone_id": "Milestone_2",
+        "criteria": [
+          {
+            "name": "ML Model Development",
+            "max_marks": 25,
+            "marks_awarded": 23,
+            "evidence": "Implemented Decision Tree, Random Forest, and HistGradientBoosting classifiers with consistent preprocessing including imputation, scaling, and encoding. Target mapping verified (1=patient, 0=non-patient). Identifiers excluded from features.",
+            "feedback": "Strong implementation of multiple classifiers with appropriate preprocessing and target verification. Minor deduction as no explicit mention of leakage checks or feature engineering beyond basic preprocessing."
+          },
+          {
+            "name": "Hyperparameter Tuning & Validation",
+            "max_marks": 20,
+            "marks_awarded": 15,
+            "evidence": "Used stratified train/test split and StratifiedKFold cross-validation on training data. Models trained on training folds only. However, no explicit hyperparameter grid search or tuning process shown; models appear to be fit with default or fixed parameters.",
+            "feedback": "Validation strategy is appropriate and stratified, but hyperparameter tuning is not demonstrated with GridSearchCV or similar. Including tuning would improve robustness."
+          },
+          {
+            "name": "Model Comparison & Performance Evaluation",
+            "max_marks": 20,
+            "marks_awarded": 18,
+            "evidence": "Compared models using ROC-AUC, recall, and F1-score on test data. False negatives are noted as important. Results displayed in a table sorted by ROC-AUC. No confusion matrix or precision reported, but recall and F1 are included.",
+            "feedback": "Good use of class-sensitive metrics and comparison. Could improve by including confusion matrices and more detailed discussion of trade-offs, especially false negatives."
+          },
+          {
+            "name": "Risk Factor / Feature Importance Analysis",
+            "max_marks": 15,
+            "marks_awarded": 5,
+            "evidence": "No explicit evidence of feature importance analysis or interpretation is present in the submission. No mention or display of feature importance plots or methods.",
+            "feedback": "Feature importance analysis is missing. Including SHAP values, permutation importance, or model feature importance with cautious interpretation would meet this criterion."
+          },
+          {
+            "name": "Risk Scoring & Patient Grouping",
+            "max_marks": 20,
+            "marks_awarded": 17,
+            "evidence": "Created an illustrative risk score by multiplying predicted probabilities by 100. Defined illustrative risk bands with clear disclaimers that these are not clinically validated. Calibration is mentioned but no calibration plots or metrics shown.",
+            "feedback": "Good responsible labeling of risk bands and disclaimers. Would benefit from explicit calibration assessment (e.g., calibration curve or Brier score) to strengthen this section."
+          }
+        ],
+        "strengths": [
+          "Implemented multiple ML classifiers with consistent preprocessing and verified target mapping.",
+          "Used stratified cross-validation and train/test split appropriately.",
+          "Compared models with ROC-AUC, recall, and F1-score, highlighting false negatives importance.",
+          "Created illustrative risk scores with clear disclaimers about clinical validity."
+        ],
+        "areas_for_improvement": [
+          "Demonstrate explicit hyperparameter tuning using GridSearchCV or similar methods.",
+          "Include feature importance analysis with valid interpretation methods.",
+          "Provide confusion matrices and precision metrics for more comprehensive model evaluation.",
+          "Assess and present calibration metrics or plots for risk scoring."
+        ],
+        "overall_feedback": "The submission shows a solid implementation of multiple machine learning models with appropriate preprocessing and validation strategy. Model comparison uses relevant metrics with attention to false negatives. The illustrative risk scoring is responsibly presented with disclaimers. However, the lack of explicit hyperparameter tuning, feature importance analysis, and calibration assessment limits the completeness of the milestone requirements. Including these elements would strengthen the educational value and rigor of the work.",
+        "human_review_required": true,
+        "total_marks": 78,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_2/Participant_M2_01_healthcare_strong.md"
+    },
+    "Submission-Milestone2/Participant_M2_02_retail_purchase_strong.ipynb": {
+      "path": "Submission-Milestone2/Participant_M2_02_retail_purchase_strong.ipynb",
+      "participant": "Participant_M2_02",
+      "sha256": "21cbb78a0b2a14f8c206563839766aec6d6a7fafa10703e7163f8b38aec00cfc",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:44:27+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Retail_Customer_Purchase",
+        "milestone_id": "Milestone_2",
+        "criteria": [
+          {
+            "name": "ML Model Development",
+            "max_marks": 25,
+            "marks_awarded": 25,
+            "evidence": "Implemented Decision Tree, Random Forest, and HistGradientBoosting regressors with consistent preprocessing using ColumnTransformer and Pipelines. Used train/test split with fixed random state for reproducibility.",
+            "feedback": "All required tree-based and boosting regression models were implemented appropriately with consistent preprocessing and reproducible settings."
+          },
+          {
+            "name": "Hyperparameter Tuning & Validation",
+            "max_marks": 20,
+            "marks_awarded": 10,
+            "evidence": "Models were instantiated with some hyperparameters set (e.g., max_depth, n_estimators), but no evidence of systematic hyperparameter tuning such as cross-validation or randomized/grid search was shown. RandomizedSearchCV was imported but not used.",
+            "feedback": "Hyperparameter tuning was not performed using training-only cross-validation or validation splits. Parameters appear manually set without tuning process. Implementing proper tuning would improve model performance and robustness."
+          },
+          {
+            "name": "Model Comparison & Performance Evaluation",
+            "max_marks": 20,
+            "marks_awarded": 20,
+            "evidence": "Models were compared on the same holdout test set using MAE, RMSE, and R² metrics. Results were displayed in a sorted DataFrame. However, no detailed discussion of practical differences or error implications was provided.",
+            "feedback": "Model comparison metrics are correctly computed and presented on the same test set. Including interpretation and discussion of practical differences and error impact would strengthen this section."
+          },
+          {
+            "name": "Risk Factor / Feature Importance Analysis",
+            "max_marks": 15,
+            "marks_awarded": 0,
+            "evidence": "No code or markdown cells show feature importance analysis or interpretation of purchase drivers. No permutation importance or model-based importance was presented.",
+            "feedback": "Feature importance analysis is missing. Including valid feature importance measures and careful interpretation distinguishing association from causation is required."
+          },
+          {
+            "name": "Clustering & Customer Segmentation",
+            "max_marks": 20,
+            "marks_awarded": 20,
+            "evidence": "Aggregated purchase behaviour per customer using total, mean purchase and transaction count. Features were scaled with StandardScaler. KMeans clustering with 3 clusters was performed. Silhouette score was computed and cluster means displayed. No over-interpretation of cluster labels was made.",
+            "feedback": "Clustering and segmentation were well executed with appropriate aggregation, scaling, cluster quality evaluation, and cautious interpretation."
+          }
+        ],
+        "strengths": [
+          "Implemented all required tree-based and boosting regression models with consistent preprocessing and reproducible train/test split.",
+          "Performed customer-level aggregation and clustering with scaling and cluster quality evaluation.",
+          "Compared models on the same holdout set with standard regression metrics."
+        ],
+        "areas_for_improvement": [
+          "Perform systematic hyperparameter tuning using cross-validation or validation splits to optimize model parameters.",
+          "Include feature importance analysis using valid methods and interpret purchase drivers carefully.",
+          "Provide discussion interpreting model comparison results and practical implications of errors."
+        ],
+        "overall_feedback": "The submission demonstrates solid implementation of multiple regression models with consistent preprocessing and reproducible evaluation on a holdout set. Customer segmentation is well done with appropriate aggregation, scaling, clustering, and cluster quality assessment. However, the submission lacks systematic hyperparameter tuning and any feature importance analysis, which are critical for model optimization and understanding purchase drivers. Additionally, the model comparison results are presented without interpretation or discussion of practical significance. Addressing these gaps would substantially improve the quality and completeness of the milestone deliverables.",
+        "human_review_required": true,
+        "total_marks": 75,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_2/Participant_M2_02_retail_purchase_strong.md"
+    },
+    "Submission-Milestone2/Participant_M2_03_loan_default_medium.ipynb": {
+      "path": "Submission-Milestone2/Participant_M2_03_loan_default_medium.ipynb",
+      "participant": "Participant_M2_03",
+      "sha256": "59f9c50c891b42322d2c3e80ef6cfb3406821a121cbcd0ef5eea1b10cc7199b5",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:44:32+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Loan_Default",
+        "milestone_id": "Milestone_2",
+        "criteria": [
+          {
+            "name": "ML Model Development",
+            "max_marks": 25,
+            "marks_awarded": 5,
+            "evidence": "The notebook outlines the intention to use stratified train/test split and mentions several classifiers (RandomForestClassifier, HistGradientBoostingClassifier, DecisionTreeClassifier) and preprocessing steps (imputation, encoding, scaling) in commented code. However, no actual model fitting or pipeline implementation is present.",
+            "feedback": "The submission shows awareness of appropriate ML models and pipeline components but lacks any executed or reproducible model development. Implementing and running the pipeline with train/test split is needed."
+          },
+          {
+            "name": "Hyperparameter Tuning & Validation",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "The notebook mentions tuning with StratifiedKFold on training data only and GridSearchCV in comments but provides no executed tuning, no search strategy details, and no evidence of leakage prevention or reproducibility.",
+            "feedback": "No hyperparameter tuning or validation results are provided. Actual tuning runs with cross-validation and documented methodology are required."
+          },
+          {
+            "name": "Model Comparison & Performance Evaluation",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "No model metrics, confusion matrices, or performance comparisons are included. The notebook explicitly states no metrics are claimed as it was not executed.",
+            "feedback": "Without executed model evaluation and metric reporting, no assessment of model performance or comparison is possible."
+          },
+          {
+            "name": "Risk Factor / Feature Importance Analysis",
+            "max_marks": 15,
+            "marks_awarded": 0,
+            "evidence": "The notebook states feature importance should be reported after fitting a valid model but provides no actual feature importance analysis or interpretation.",
+            "feedback": "Feature importance analysis is missing. After model fitting, feature importance with interpretation and limitations should be included."
+          },
+          {
+            "name": "Clustering & Borrower Segmentation",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "Clustering is mentioned as requiring a separate justified feature set and quality checks, but no clustering implementation, feature preparation, cluster count selection, or segment profiling is present.",
+            "feedback": "No clustering or borrower segmentation evidence is provided. Implementing clustering with justification and interpretation is needed."
+          }
+        ],
+        "strengths": [
+          "Clear project and milestone identification.",
+          "Awareness of appropriate ML models and validation strategies.",
+          "Explicit caution about not claiming unexecuted results."
+        ],
+        "areas_for_improvement": [
+          "Execute and document model training pipelines with reproducible splits.",
+          "Perform and report hyperparameter tuning with cross-validation.",
+          "Provide quantitative model comparison with relevant metrics.",
+          "Include feature importance analysis with interpretation.",
+          "Implement clustering and borrower segmentation with business insights."
+        ],
+        "overall_feedback": "This submission provides a well-structured outline and demonstrates understanding of the required steps for Milestone 2 but lacks any executed code or results. To meet the milestone requirements, the participant must run the analyses, report metrics, and provide interpretations. Currently, the submission is incomplete and cannot be scored beyond minimal recognition of planning.",
+        "human_review_required": true,
+        "total_marks": 5,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_2/Participant_M2_03_loan_default_medium.md"
+    },
+    "Submission-Milestone2/Participant_M2_04_healthcare_medium.ipynb": {
+      "path": "Submission-Milestone2/Participant_M2_04_healthcare_medium.ipynb",
+      "participant": "Participant_M2_04",
+      "sha256": "e178a5e398841db4cc9a8536d27e73756fee66bc434909fd81bb4bd027c661be",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:44:38+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Healthcare_Liver_Disease",
+        "milestone_id": "Milestone_2",
+        "criteria": [
+          {
+            "name": "ML Model Development",
+            "max_marks": 25,
+            "marks_awarded": 23,
+            "evidence": "Implemented Decision Tree, Random Forest, and HistGradientBoosting classifiers with consistent preprocessing pipelines including imputation and encoding. Target mapping verified (1=patient, 0=non-patient).",
+            "feedback": "Models are appropriate and preprocessing is consistent with verified target. Could improve by showing more details on feature engineering or handling of outliers if any."
+          },
+          {
+            "name": "Hyperparameter Tuning & Validation",
+            "max_marks": 20,
+            "marks_awarded": 15,
+            "evidence": "Used stratified train/test split and StratifiedKFold cross-validation on training data. However, no explicit hyperparameter grid search or tuning is shown; models are fit with default or fixed parameters.",
+            "feedback": "Validation strategy is appropriate and stratified. However, hyperparameter tuning is minimal or absent; using GridSearchCV or similar would improve robustness."
+          },
+          {
+            "name": "Model Comparison & Performance Evaluation",
+            "max_marks": 20,
+            "marks_awarded": 17,
+            "evidence": "Compared models using ROC-AUC, recall, and F1 on test set. False negatives are mentioned as important but no detailed inspection or confusion matrices shown. Trade-offs between recall and other metrics are not deeply discussed.",
+            "feedback": "Good use of class-sensitive metrics and ROC-AUC. More detailed analysis of false negatives and explicit discussion of trade-offs would strengthen evaluation."
+          },
+          {
+            "name": "Risk Factor / Feature Importance Analysis",
+            "max_marks": 15,
+            "marks_awarded": 8,
+            "evidence": "Feature importance is mentioned in milestone scope but no explicit feature importance outputs or interpretation are shown in the submission.",
+            "feedback": "Feature importance analysis is missing or minimal. Including feature importance plots or explanations with caution about causality would improve this criterion."
+          },
+          {
+            "name": "Risk Scoring & Patient Grouping",
+            "max_marks": 20,
+            "marks_awarded": 18,
+            "evidence": "An illustrative risk score is created by scaling predicted probabilities to 0-100 and grouping into three illustrative bands with clear disclaimers about non-clinical validation and calibration.",
+            "feedback": "Risk scoring is responsibly presented with appropriate disclaimers. Could improve by showing calibration plots or quantitative calibration assessment."
+          }
+        ],
+        "strengths": [
+          "Appropriate choice of ML models with consistent preprocessing pipelines.",
+          "Use of stratified validation to avoid data leakage.",
+          "Clear disclaimers on risk scoring and non-clinical interpretation."
+        ],
+        "areas_for_improvement": [
+          "Include explicit hyperparameter tuning with grid search or randomized search.",
+          "Provide detailed false negative analysis and confusion matrices.",
+          "Add feature importance analysis with valid interpretation.",
+          "Demonstrate calibration assessment quantitatively."
+        ],
+        "overall_feedback": "The submission demonstrates solid implementation of multiple ML classifiers with appropriate preprocessing and stratified validation. Model comparison uses relevant metrics but lacks deeper analysis of false negatives and trade-offs. Risk scoring is responsibly handled with disclaimers. However, hyperparameter tuning is minimal, feature importance analysis is missing, and calibration assessment is not shown. Addressing these gaps would strengthen the educational value and completeness of the milestone.",
+        "human_review_required": true,
+        "total_marks": 81,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_2/Participant_M2_04_healthcare_medium.md"
+    },
+    "Submission-Milestone2/Participant_M2_05_loan_default_weak.ipynb": {
+      "path": "Submission-Milestone2/Participant_M2_05_loan_default_weak.ipynb",
+      "participant": "Participant_M2_05",
+      "sha256": "40c666cce85cf56272c6b54b9de08ab804cdbce7f47c7d33acd96881c06b7eca",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:44:43+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Loan_Default",
+        "milestone_id": "Milestone_2",
+        "criteria": [
+          {
+            "name": "ML Model Development",
+            "max_marks": 25,
+            "marks_awarded": 0,
+            "evidence": "The notebook only contains a plan to try Random Forest and Decision Tree models but no actual model implementation, training, or reproducible pipeline is shown.",
+            "feedback": "No machine learning models were developed or implemented. To improve, the participant should load the dataset, preprocess it, implement models with a proper train/test split, and provide runnable code."
+          },
+          {
+            "name": "Hyperparameter Tuning & Validation",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "There is a placeholder comment about tuning hyperparameters on training data only, but no actual tuning, cross-validation, or validation strategy is demonstrated.",
+            "feedback": "No hyperparameter tuning or validation was performed. The participant should implement cross-validation or other tuning methods on training data to avoid leakage and report reproducible tuning results."
+          },
+          {
+            "name": "Model Comparison & Performance Evaluation",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "No fitted models, validation results, or performance metrics such as precision, recall, F1, or ROC-AUC are presented.",
+            "feedback": "No model comparison or performance evaluation is provided. The participant should run models on held-out data, compute relevant metrics, and compare results to the baseline."
+          },
+          {
+            "name": "Risk Factor / Feature Importance Analysis",
+            "max_marks": 15,
+            "marks_awarded": 0,
+            "evidence": "No feature importance or interpretability analysis is included.",
+            "feedback": "Feature importance analysis is missing. The participant should analyze and interpret key risk factors and discuss their relevance and limitations."
+          },
+          {
+            "name": "Clustering & Borrower Segmentation",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "No clustering or borrower segmentation is attempted or discussed.",
+            "feedback": "No clustering or segmentation was performed. The participant should apply clustering methods, justify cluster counts, profile segments, and interpret business implications."
+          }
+        ],
+        "strengths": [
+          "Clear initial plan to try Random Forest and Decision Tree models.",
+          "Acknowledgement of missing evidence and caution about synthetic data."
+        ],
+        "areas_for_improvement": [
+          "Implement and run machine learning models with proper data handling.",
+          "Perform hyperparameter tuning with cross-validation and avoid leakage.",
+          "Report and compare model performance metrics comprehensively.",
+          "Conduct feature importance analysis with interpretation.",
+          "Apply clustering for borrower segmentation with business insights."
+        ],
+        "overall_feedback": "This submission is a draft with only a high-level plan and no executed analysis or results. It lacks all required evidence for Milestone 2, including model development, tuning, evaluation, interpretability, and clustering. To meet the milestone requirements, the participant must run the analyses on the approved dataset, provide reproducible code and outputs, and interpret findings responsibly.",
+        "human_review_required": true,
+        "total_marks": 0,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_2/Participant_M2_05_loan_default_weak.md"
+    },
+    "Submission-Milestone3/Participant_M3_01_loan_default_strong.ipynb": {
+      "path": "Submission-Milestone3/Participant_M3_01_loan_default_strong.ipynb",
+      "participant": "Participant_M3_01",
+      "sha256": "28544891fc47966037d77d9b7cde7480948c9d02e05eae744e939ddd8507133e",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:44:49+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Loan_Default",
+        "milestone_id": "Milestone_3",
+        "criteria": [
+          {
+            "name": "Neural Network Design & Implementation",
+            "max_marks": 25,
+            "marks_awarded": 10,
+            "evidence": "The submission proposes a neural network using sklearn's MLPClassifier with two hidden layers (64, 32), early stopping, max_iter=250, and random_state=42. Activation, loss, and optimizer choices are not explicitly stated but are defaults in MLPClassifier. The design is simple and justified as a baseline deep learning model.",
+            "feedback": "The architecture is appropriate for tabular data but lacks explicit discussion of activation functions, loss, or optimizer choices. More detailed justification and exploration of architecture variants would improve this section."
+          },
+          {
+            "name": "Data Preparation & Training",
+            "max_marks": 20,
+            "marks_awarded": 8,
+            "evidence": "Data loading and preprocessing steps are outlined, including leakage-aware train/test split with stratification, numeric and categorical feature pipelines with imputation and scaling/encoding. However, the TARGET variable is not set, so no actual training occurs. Class imbalance handling is only implied via class_weight='balanced' in RandomForest, not explicitly for the neural network.",
+            "feedback": "Data preparation is well structured but incomplete due to missing TARGET assignment and no actual training or reproducibility details (e.g., seed for neural network beyond random_state). Explicit handling of class imbalance for the neural network is missing."
+          },
+          {
+            "name": "Model Evaluation & Overfitting Analysis",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "No actual model training or evaluation metrics are reported. The notebook contains commented code suggesting use of classification_report and ROC-AUC, and mentions reviewing training/validation performance for overfitting, but no results or plots are provided.",
+            "feedback": "No evidence of model evaluation or overfitting analysis is present. Actual metrics, learning curves, or validation analysis must be included to award marks."
+          },
+          {
+            "name": "ML vs DL Comparison",
+            "max_marks": 15,
+            "marks_awarded": 0,
+            "evidence": "The notebook outlines a plan to compare RandomForest and MLPClassifier on the same test set using classification_report and ROC-AUC, but no executed comparison or results are shown.",
+            "feedback": "No executed comparison or conclusions are provided. A fair comparison with consistent splits and metrics is required."
+          },
+          {
+            "name": "NLP Implementation & Findings",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "The notebook states that if approved text data is supplied, an NLP task should be defined, but no NLP implementation, text preparation, or findings are present.",
+            "feedback": "No NLP implementation or findings are provided. This section is missing entirely."
+          }
+        ],
+        "strengths": [
+          "Clear and leakage-aware data preprocessing pipeline with stratified train/test split.",
+          "Appropriate baseline neural network architecture proposed with early stopping and random state for reproducibility.",
+          "Consideration of responsible AI practices by not claiming metrics without execution."
+        ],
+        "areas_for_improvement": [
+          "Set and verify the TARGET variable to enable actual training and evaluation.",
+          "Execute model training and report detailed evaluation metrics including overfitting analysis.",
+          "Provide a fair and executed comparison between ML and DL models on the same data splits.",
+          "Implement and report on the NLP task if relevant text data is available.",
+          "Include more detailed justification of neural network design choices and training configuration."
+        ],
+        "overall_feedback": "The submission provides a well-structured plan and partial implementation for Milestone 3, including data preparation and neural network design. However, it lacks execution of training, evaluation, and comparison steps, as well as any NLP implementation. To meet the milestone requirements, the participant must run the code with the verified dataset, produce and report metrics, analyze overfitting, and implement the NLP component if applicable. The submission demonstrates understanding but is incomplete in evidence.",
+        "human_review_required": true,
+        "total_marks": 18,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_3/Participant_M3_01_loan_default_strong.md"
+    },
+    "Submission-Milestone3/Participant_M3_02_healthcare_strong.ipynb": {
+      "path": "Submission-Milestone3/Participant_M3_02_healthcare_strong.ipynb",
+      "participant": "Participant_M3_02",
+      "sha256": "6e86783215ec7ec0aee465180fba03a589fccebaf2a1a39e1d44cfce2783caa9",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:44:55+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Healthcare_Liver_Disease",
+        "milestone_id": "Milestone_3",
+        "criteria": [
+          {
+            "name": "Neural Network Design & Implementation",
+            "max_marks": 25,
+            "marks_awarded": 20,
+            "evidence": "The submission uses sklearn's MLPClassifier with a documented architecture of two hidden layers (64, 32 units), early stopping enabled, max iterations set to 250, and a fixed random state for reproducibility.",
+            "feedback": "The neural network architecture is appropriate and training settings are documented. However, more detailed documentation on activation functions, optimizer, or architecture rationale would improve clarity."
+          },
+          {
+            "name": "Data Preparation & Training",
+            "max_marks": 20,
+            "marks_awarded": 18,
+            "evidence": "Data preprocessing includes median imputation and scaling for numeric features, most frequent imputation and one-hot encoding for categorical features, all done within a ColumnTransformer pipeline. The train-test split is stratified with a fixed random state. Early stopping is used in the neural network to prevent overfitting.",
+            "feedback": "Data preparation is leakage-aware and uses appropriate encoding and scaling. Early stopping is applied. However, no explicit mention of validation set or cross-validation for hyperparameter tuning is present."
+          },
+          {
+            "name": "Model Evaluation & Overfitting Analysis",
+            "max_marks": 20,
+            "marks_awarded": 12,
+            "evidence": "Evaluation metrics (ROC-AUC, recall, F1) are reported on the held-out test set for both models. Early stopping is enabled to mitigate overfitting. However, no training vs validation metric comparison or explicit overfitting analysis is shown.",
+            "feedback": "Metrics on held-out data are provided, but the submission lacks detailed overfitting assessment such as training vs validation curves or error analysis."
+          },
+          {
+            "name": "ML vs DL Comparison",
+            "max_marks": 15,
+            "marks_awarded": 15,
+            "evidence": "The neural network is compared directly with a Random Forest baseline on the same stratified holdout test set using ROC-AUC, recall, and F1 scores. Both models are trained on the same preprocessed data.",
+            "feedback": "A clear and fair comparison between ML and DL models is presented with relevant metrics on the same test data."
+          },
+          {
+            "name": "NLP Implementation & Findings",
+            "max_marks": 20,
+            "marks_awarded": 5,
+            "evidence": "The submission loads the Healthcare_Education_Text.csv and displays its shape and columns, showing initial exploration. However, no further NLP task (e.g., summarization, entity extraction, classification) or findings are demonstrated.",
+            "feedback": "Initial data loading and inspection is shown, but the defined NLP task is not completed or evidenced beyond data loading."
+          }
+        ],
+        "strengths": [
+          "Well-structured neural network with documented architecture and training settings.",
+          "Leakage-aware data preprocessing with appropriate encoding and scaling.",
+          "Use of stratified train-test split and early stopping to improve model robustness.",
+          "Direct comparison of neural network and Random Forest on the same test set with multiple metrics."
+        ],
+        "areas_for_improvement": [
+          "Provide more detailed neural network architecture documentation (activation functions, optimizer).",
+          "Include validation set or cross-validation for hyperparameter tuning and more robust training.",
+          "Present training vs validation metrics or learning curves to assess overfitting explicitly.",
+          "Complete the NLP task with actual processing, analysis, or summarization of the healthcare education text."
+        ],
+        "overall_feedback": "The submission demonstrates a solid neural network implementation and a fair comparison with a Random Forest baseline using appropriate preprocessing and evaluation metrics. However, it lacks detailed overfitting analysis and does not complete the NLP task beyond initial data loading. Enhancing documentation and completing the NLP component would strengthen the milestone deliverables.",
+        "human_review_required": true,
+        "total_marks": 70,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_3/Participant_M3_02_healthcare_strong.md"
+    },
+    "Submission-Milestone3/Participant_M3_03_retail_purchase_medium.ipynb": {
+      "path": "Submission-Milestone3/Participant_M3_03_retail_purchase_medium.ipynb",
+      "participant": "Participant_M3_03",
+      "sha256": "f5ac03a9b7c52e8065c2125f0af11a529ee2b25bc73aea55b00699d3fdc28e71",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:45:02+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Retail_Customer_Purchase",
+        "milestone_id": "Milestone_3",
+        "criteria": [
+          {
+            "name": "Neural Network Design & Implementation",
+            "max_marks": 25,
+            "marks_awarded": 20,
+            "evidence": "The submission uses sklearn's MLPRegressor with a documented architecture of two hidden layers (128, 64), early stopping enabled, max_iter=150, and random_state=42 for reproducibility.",
+            "feedback": "The neural network architecture is clearly specified and reproducible settings are used. However, there is no detailed documentation of activation functions, optimizer settings, or rationale for architecture choice, which limits full assessment."
+          },
+          {
+            "name": "Data Preparation & Training",
+            "max_marks": 20,
+            "marks_awarded": 18,
+            "evidence": "Data preprocessing uses a ColumnTransformer with median imputation and StandardScaler for numeric features, and most frequent imputation plus OneHotEncoder for categorical features. Preprocessing is fit only on training data and then applied to test data. Early stopping is used in training the MLPRegressor.",
+            "feedback": "Data preparation is appropriate and correctly applied only on training data. Early stopping provides regularization. However, no explicit validation set split or cross-validation is shown, and no mention of hyperparameter tuning or other regularization techniques beyond early stopping."
+          },
+          {
+            "name": "Model Evaluation & Overfitting Analysis",
+            "max_marks": 20,
+            "marks_awarded": 12,
+            "evidence": "Evaluation metrics MAE, RMSE, and R² are computed on the held-out test set for both RandomForest and MLP models. Early stopping is enabled for the neural network. However, no training vs validation performance comparison or residual analysis is presented, nor is overfitting explicitly discussed.",
+            "feedback": "Model evaluation on held-out data is done with appropriate metrics. However, the submission lacks analysis of training vs validation errors to assess overfitting or error patterns, and no plots or detailed discussion are provided."
+          },
+          {
+            "name": "ML vs DL Comparison",
+            "max_marks": 15,
+            "marks_awarded": 15,
+            "evidence": "Both RandomForestRegressor and MLPRegressor are trained and evaluated on the same train/test split with consistent metrics (MAE, RMSE, R²) reported side-by-side.",
+            "feedback": "The comparison between ML and DL models is clear and uses identical held-out data and consistent metrics, fulfilling the criterion well."
+          },
+          {
+            "name": "NLP Implementation & Findings",
+            "max_marks": 20,
+            "marks_awarded": 5,
+            "evidence": "The submission loads Customer_Reviews.csv, displays sample data and columns, identifies candidate text columns, and performs TF-IDF vectorization and TruncatedSVD for exploratory text representation. It explicitly states no labels or evaluation metrics are fabricated and no supervised NLP task is performed due to lack of verified labels.",
+            "feedback": "The NLP task is limited to exploratory unsupervised text representation without a defined downstream task or evaluation. While this is cautious and avoids fabricating labels, it falls short of demonstrating a valid NLP task with findings."
+          }
+        ],
+        "strengths": [
+          "Clear neural network architecture with reproducible settings.",
+          "Proper data preprocessing applied only on training data.",
+          "Consistent evaluation metrics used for ML and DL models on the same test set.",
+          "Cautious and responsible approach to NLP without fabricating labels or metrics."
+        ],
+        "areas_for_improvement": [
+          "Provide more detailed documentation of neural network design choices and training parameters.",
+          "Include validation set or cross-validation for better training and regularization assessment.",
+          "Add training vs validation performance comparison and residual/error analysis to discuss overfitting.",
+          "Extend NLP work to a defined task with evaluation if labels are available or justify unsupervised approach with insights."
+        ],
+        "overall_feedback": "The submission meets the core requirements of Milestone 3 by implementing a neural network regression model with appropriate preprocessing and comparing it fairly to a best ML model using consistent metrics on held-out data. The neural network design is documented but could be more detailed. Data preparation and training are sound, though validation and overfitting analysis are limited. The NLP component is cautious and avoids fabrication but lacks a defined task or findings. Overall, the work is solid but could be strengthened by deeper analysis and more comprehensive NLP implementation.",
+        "human_review_required": true,
+        "total_marks": 70,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_3/Participant_M3_03_retail_purchase_medium.md"
+    },
+    "Submission-Milestone3/Participant_M3_04_loan_default_medium.ipynb": {
+      "path": "Submission-Milestone3/Participant_M3_04_loan_default_medium.ipynb",
+      "participant": "Participant_M3_04",
+      "sha256": "f26f3bd801688c75bd7159451de43c886871cef02913aa654411c0429c64ed2f",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:45:06+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Loan_Default",
+        "milestone_id": "Milestone_3",
+        "criteria": [
+          {
+            "name": "Neural Network Design & Implementation",
+            "max_marks": 25,
+            "marks_awarded": 0,
+            "evidence": "The notebook contains only placeholder TODO comments for neural network design without any implemented architecture, activation functions, loss, optimizer, or justification.",
+            "feedback": "No neural network design or implementation is present. To improve, implement a suitable neural network architecture with justified design choices."
+          },
+          {
+            "name": "Data Preparation & Training",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "Data loading code is present but no preprocessing steps, train/validation/test splits, class imbalance handling, or training configuration are implemented. Only TODO comments indicate these steps.",
+            "feedback": "Data preparation and training steps are missing. Implement proper preprocessing, splitting, and training procedures to earn marks."
+          },
+          {
+            "name": "Model Evaluation & Overfitting Analysis",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "No metrics, learning curves, validation analysis, or overfitting mitigation are provided. The notebook explicitly states no executed metrics or overfitting analysis are included.",
+            "feedback": "No evaluation or overfitting analysis is present. Include appropriate metrics and analysis to assess model performance and generalization."
+          },
+          {
+            "name": "ML vs DL Comparison",
+            "max_marks": 15,
+            "marks_awarded": 0,
+            "evidence": "No comparison against prior ML models is performed. The notebook contains only a TODO comment about comparing metrics but no actual comparison or results.",
+            "feedback": "No ML vs DL comparison is provided. Perform a fair comparison using consistent data splits and metrics."
+          },
+          {
+            "name": "NLP Implementation & Findings",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "No NLP implementation or findings are included. The notebook states that NLP activity is not implemented yet and to use only supplied text if available.",
+            "feedback": "No NLP work is done. Implement an NLP task using supplied text data if available."
+          }
+        ],
+        "strengths": [
+          "The notebook includes clear TODO comments indicating awareness of required steps for Milestone 3.",
+          "Data loading code is present and checks for dataset availability."
+        ],
+        "areas_for_improvement": [
+          "Implement the neural network architecture with justified design choices.",
+          "Perform full data preprocessing, splitting, and training with reproducibility.",
+          "Generate and report evaluation metrics and overfitting analysis.",
+          "Conduct a fair comparison between ML and DL models on the same data.",
+          "Implement the NLP task using supplied text data and report findings."
+        ],
+        "overall_feedback": "This submission is a draft with no executed code or results for Milestone 3 requirements. It shows awareness of the tasks but lacks any implemented analysis, modeling, or evaluation. Significant work is needed to meet the milestone expectations.",
+        "human_review_required": true,
+        "total_marks": 0,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_3/Participant_M3_04_loan_default_medium.md"
+    },
+    "Submission-Milestone3/Participant_M3_05_healthcare_weak.ipynb": {
+      "path": "Submission-Milestone3/Participant_M3_05_healthcare_weak.ipynb",
+      "participant": "Participant_M3_05",
+      "sha256": "6337da912e6a820aee34831ab5945bea4d3f9556b1efe273473a7310c7c9c968",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:45:11+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Healthcare_Liver_Disease",
+        "milestone_id": "Milestone_3",
+        "criteria": [
+          {
+            "name": "Neural Network Design & Implementation",
+            "max_marks": 25,
+            "marks_awarded": 5,
+            "evidence": "The submission includes a model outline for a neural network classifier, indicating some design intent. However, no detailed architecture, layer descriptions, or documented training settings are provided.",
+            "feedback": "The submission shows initial neural network design intent but lacks detailed architecture and reproducible training settings. To improve, provide a full documented model architecture with layer types, sizes, activation functions, and training parameters."
+          },
+          {
+            "name": "Data Preparation & Training",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "No evidence of data encoding, scaling, leakage prevention, validation strategy, early stopping, or regularization is present in the submission.",
+            "feedback": "Data preparation and training procedures are missing. Include clear encoding/scaling steps, leakage-aware preprocessing, and validation or regularization methods to ensure robust training."
+          },
+          {
+            "name": "Model Evaluation & Overfitting Analysis",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "No evaluation metrics on held-out data, no training vs validation metric comparison, and no overfitting analysis are provided.",
+            "feedback": "Evaluation on held-out data and overfitting analysis are absent. Provide confusion matrices, precision, recall, F1, ROC-AUC on test data, and compare training and validation metrics to assess overfitting."
+          },
+          {
+            "name": "ML vs DL Comparison",
+            "max_marks": 15,
+            "marks_awarded": 0,
+            "evidence": "The submission states intent to compare the neural network with the best ML model on the same test set but does not provide any comparison results or metrics.",
+            "feedback": "No comparison between neural network and ML baseline is presented. Include side-by-side metric tables or plots on the same held-out data to fulfill this criterion."
+          },
+          {
+            "name": "NLP Implementation & Findings",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "No NLP task implementation or findings using the supplied healthcare education text are included.",
+            "feedback": "NLP tasks and findings are missing. Implement a defined NLP task using the provided healthcare education text and present valid evidence without medical advice claims."
+          }
+        ],
+        "strengths": [
+          "Clear project and milestone identification.",
+          "Acknowledgement of educational scope and limitations."
+        ],
+        "areas_for_improvement": [
+          "Provide detailed neural network architecture and training settings.",
+          "Include comprehensive data preparation and leakage prevention steps.",
+          "Present evaluation metrics and overfitting analysis on held-out data.",
+          "Perform and document ML vs DL model comparison on the same test set.",
+          "Implement and report on the defined NLP task using supplied texts."
+        ],
+        "overall_feedback": "The submission outlines the milestone objectives and neural network intent but lacks substantive implementation, evaluation, and NLP evidence. To meet Milestone 3 requirements, detailed neural network design, rigorous data preparation, thorough evaluation including overfitting analysis, ML vs DL comparison, and NLP task completion are necessary. The current evidence is insufficient to award marks beyond minimal credit for initial model outline.",
+        "human_review_required": true,
+        "total_marks": 5,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_3/Participant_M3_05_healthcare_weak.md"
+    },
+    "Submission-Milestone4/Participant_M4_01_retail_purchase_strong.ipynb": {
+      "path": "Submission-Milestone4/Participant_M4_01_retail_purchase_strong.ipynb",
+      "participant": "Participant_M4_01",
+      "sha256": "17fc9d8319eadb6958fe2c51daa10249b7150c528cfa83ce159a01c42dd3ed2e",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:45:19+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Retail_Customer_Purchase",
+        "milestone_id": "Milestone_4",
+        "criteria": [
+          {
+            "name": "LLM Explanations & Prompt Engineering",
+            "max_marks": 20,
+            "marks_awarded": 18,
+            "evidence": "The submission includes a clear prompt template instructing the LLM to use only supplied query results and retrieved approved passages, to separate observed facts from model predictions and assumptions, to avoid inventing metrics or causal explanations, and to return concise reasoning with source identifiers, uncertainty, and limitations. This demonstrates strong prompt engineering aligned with the requirement to explain validated purchase trends and model results without inventing evidence or causality.",
+            "feedback": "Strong prompt engineering with explicit instructions to avoid fabrication and causal claims. Could be improved by including example LLM explanation outputs demonstrating the prompt in action."
+          },
+          {
+            "name": "RAG: Ingestion/Retrieval/Grounding",
+            "max_marks": 20,
+            "marks_awarded": 16,
+            "evidence": "The submission describes ingestion of only approved project-specific reference documents (product/promotion policy PDFs), preserving document title and page/section metadata for citations. It mandates retrieval of evidence before drafting answers and states to indicate when no relevant passage is found. However, no actual retrieval code or example outputs are shown, and no citations or grounded responses are demonstrated in the notebook.",
+            "feedback": "Good design and grounding principles described, including metadata preservation and retrieval-before-answering. Lacks concrete evidence of implemented ingestion, retrieval, or grounded responses with citations."
+          },
+          {
+            "name": "Text-to-SQL & Query Safety",
+            "max_marks": 20,
+            "marks_awarded": 20,
+            "evidence": "The submission provides example Python code for validating read-only SQL queries, enforcing that only single SELECT statements are allowed, blocking potentially unsafe keywords (INSERT, UPDATE, DELETE, DROP, etc.), and rejecting multi-statement queries. This aligns well with the requirement for schema-aware read-only SQL and query safety.",
+            "feedback": "Excellent implementation of SQL safety checks with clear regex-based validation and comments. No evidence of schema-awareness or integration with actual retail schema, but safety enforcement is robust."
+          },
+          {
+            "name": "AI Agent Orchestration",
+            "max_marks": 20,
+            "marks_awarded": 17,
+            "evidence": "The submission outlines a modular agent design separating SQL execution, retrieval, and summarization as distinct tools with explicit input/output contracts. It emphasizes logging evaluation cases without exposing sensitive data and clear routing and tool boundaries. However, no actual orchestration code or workflow examples are provided.",
+            "feedback": "Strong conceptual design for agent orchestration with clear separation of concerns and traceability. Would benefit from concrete implementation or demonstration of the orchestration in action."
+          },
+          {
+            "name": "Evaluation & Responsible AI",
+            "max_marks": 20,
+            "marks_awarded": 18,
+            "evidence": "The submission includes a detailed evaluation checklist covering unsupported questions, conflicting evidence, SQL write command rejection, prompt injection handling, sensitive data requests, and avoidance of fabricated forecasts or metrics. It also specifies retail-specific guardrails to use aggregate insights, avoid customer-level data exposure, and not claim causation from associations.",
+            "feedback": "Comprehensive responsible AI considerations and evaluation plan are well documented. No evidence of actual testing or results, but the documented approach is thorough and appropriate."
+          }
+        ],
+        "strengths": [
+          "Clear and explicit prompt engineering to prevent fabrication and causal claims.",
+          "Robust SQL safety validation code enforcing read-only queries.",
+          "Well-considered agent design separating retrieval, SQL, and summarization tools.",
+          "Comprehensive responsible AI evaluation checklist and privacy guardrails."
+        ],
+        "areas_for_improvement": [
+          "Provide concrete examples or outputs demonstrating LLM explanations using the prompt.",
+          "Include actual ingestion, retrieval, and grounded response examples with citations.",
+          "Demonstrate schema-aware SQL generation or integration with retail database schema.",
+          "Show implemented agent orchestration workflows or code.",
+          "Include results or logs from responsible AI tests and failure handling."
+        ],
+        "overall_feedback": "The submission presents a strong conceptual and partial technical implementation for Milestone 4 requirements. It excels in prompt engineering, SQL safety, and responsible AI planning. However, it lacks concrete demonstrations of retrieval grounding, agent orchestration, and example LLM outputs. Providing these would strengthen the evidence of full milestone achievement. Human review is recommended to verify actual implementation and adherence to responsible AI principles.",
+        "human_review_required": true,
+        "total_marks": 89,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_4/Participant_M4_01_retail_purchase_strong.md"
+    },
+    "Submission-Milestone4/Participant_M4_02_healthcare_strong.ipynb": {
+      "path": "Submission-Milestone4/Participant_M4_02_healthcare_strong.ipynb",
+      "participant": "Participant_M4_02",
+      "sha256": "bca9c0011be3a8ddefc416a99758b352cc0f566f20a79f46246cafc8d596fd35",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:45:26+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Healthcare_Liver_Disease",
+        "milestone_id": "Milestone_4",
+        "criteria": [
+          {
+            "name": "LLM Explanations & Prompt Engineering",
+            "max_marks": 20,
+            "marks_awarded": 18,
+            "evidence": "The submission includes a clear prompt template instructing the assistant to use only supplied query results and retrieved approved passages, to separate observed facts from model predictions and assumptions, to state when evidence is missing, and to avoid inventing metrics or causal explanations. The prompt emphasizes concise reasoning, source identifiers, uncertainty, and limitations. The markdown cells repeatedly stress the need to distinguish observed data from model outputs and to communicate risk responsibly.",
+            "feedback": "Strong evidence of cautious, evidence-grounded explanations and prompt engineering that aligns well with the rubric. Minor deduction as no explicit example outputs of LLM explanations are shown in the notebook to fully confirm adherence."
+          },
+          {
+            "name": "RAG: Ingestion/Retrieval/Grounding",
+            "max_marks": 20,
+            "marks_awarded": 17,
+            "evidence": "The submission states ingestion only of approved project-specific reference documents, preserving document titles and metadata for citations. It mandates retrieval before drafting answers and requires stating when no relevant passage is found. The design separates retrieval from summarization and SQL querying. However, no concrete retrieval outputs or example citations are shown in the notebook to fully verify grounding or abstention behavior.",
+            "feedback": "Good architectural design and policies for retrieval and grounding are described, but lack of concrete retrieval examples or evidence of abstention limits full marks."
+          },
+          {
+            "name": "Text-to-SQL & Query Safety",
+            "max_marks": 20,
+            "marks_awarded": 20,
+            "evidence": "The submission provides a detailed SQL validation function that enforces read-only SELECT statements, blocks unsafe keywords (INSERT, UPDATE, DELETE, DROP, ALTER, CREATE, ATTACH, DETACH, PRAGMA, REPLACE), disallows multiple statements, and trims trailing semicolons. Comments indicate use of PRAGMA query_only=ON for SQLite. This demonstrates strong safeguards against unsafe SQL and exposure of sensitive data.",
+            "feedback": "Excellent implementation of schema-constrained, read-only SQL validation with clear rejection of unsafe commands and multiple statements."
+          },
+          {
+            "name": "AI Agent Orchestration",
+            "max_marks": 20,
+            "marks_awarded": 18,
+            "evidence": "The submission describes separate tools for SQL execution, retrieval, and summarization with explicit input/output contracts. It emphasizes logging evaluation cases without exposing sensitive data. The architecture and safety plan markdown cells specify clear boundaries and routing between components. However, no code or logs demonstrating error handling or orchestration flow are provided.",
+            "feedback": "Well-designed modular orchestration with clear separation of concerns and privacy considerations. Slight deduction due to absence of concrete orchestration or error handling examples."
+          },
+          {
+            "name": "Evaluation & Responsible AI",
+            "max_marks": 20,
+            "marks_awarded": 19,
+            "evidence": "The submission includes a detailed evaluation checklist covering unsupported questions, conflicting evidence, SQL write command rejection, prompt injection handling, sensitive data requests, and avoidance of invented forecasts or metrics. Healthcare-specific guardrails are stated, including labeling illustrative risk scores, avoiding unvalidated thresholds, protecting privacy, and escalating clinical questions to qualified professionals. The notebook explicitly states this is educational work and not a substitute for clinical judgment.",
+            "feedback": "Comprehensive coverage of responsible AI considerations and evaluation tests. Minor deduction as no actual test results or examples of these checks in action are shown."
+          }
+        ],
+        "strengths": [
+          "Clear and cautious prompt engineering emphasizing evidence grounding and uncertainty.",
+          "Robust SQL validation enforcing read-only queries and blocking unsafe commands.",
+          "Thoughtful architecture separating retrieval, querying, and summarization with privacy safeguards.",
+          "Comprehensive evaluation checklist addressing privacy, fairness, hallucination, and escalation.",
+          "Explicit healthcare-specific guardrails to prevent misuse and clarify educational purpose."
+        ],
+        "areas_for_improvement": [
+          "Include concrete examples of LLM explanations with source citations to demonstrate grounding.",
+          "Provide sample retrieval outputs and abstention cases to verify RAG implementation.",
+          "Show orchestration flows with error handling and logging in practice.",
+          "Demonstrate evaluation checklist tests with actual results or logs."
+        ],
+        "overall_feedback": "The submission presents a well-structured and safety-conscious approach to Milestone 4 requirements, with strong prompt engineering, SQL safety, and responsible AI considerations. The architectural design for retrieval and agent orchestration is sound and privacy-aware. However, the lack of concrete execution outputs, retrieval examples, and test results limits full verification of grounding, abstention, and error handling. Including such evidence would strengthen confidence in the implementation and completeness.",
+        "human_review_required": true,
+        "total_marks": 92,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_4/Participant_M4_02_healthcare_strong.md"
+    },
+    "Submission-Milestone4/Participant_M4_03_loan_default_medium.ipynb": {
+      "path": "Submission-Milestone4/Participant_M4_03_loan_default_medium.ipynb",
+      "participant": "Participant_M4_03",
+      "sha256": "7cce8aded4127ccc916d43588e926d63c2e8e1a8bb5896509a1b33aecc3533b4",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:45:33+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Loan_Default",
+        "milestone_id": "Milestone_4",
+        "criteria": [
+          {
+            "name": "LLM Explanations & Prompt Engineering",
+            "max_marks": 20,
+            "marks_awarded": 10,
+            "evidence": "The submission includes a clear SYSTEM_PROMPT that instructs the assistant to use only supplied query results and approved policy excerpts, to distinguish observed data from assumptions, to cite sources, and to avoid inventing metrics or autonomous decisions. This shows awareness of prompt design and grounding. However, there is no evidence of actual LLM outputs, explanations generated, or demonstration of avoidance of unsupported claims in practice.",
+            "feedback": "Good foundational prompt engineering and clear instructions for responsible explanations are present. To improve, demonstrate actual LLM-generated borrower-risk explanations with citations and show how unsupported claims are avoided in outputs."
+          },
+          {
+            "name": "RAG: Ingestion/Retrieval/Grounding",
+            "max_marks": 20,
+            "marks_awarded": 5,
+            "evidence": "The notebook outlines a RAG design approach including ingestion of approved loan policies with metadata retention, retrieval of relevant passages before answering, and citation of sources. However, there is no implemented or executed evidence of document ingestion, embedding creation, retrieval results, or grounding validation.",
+            "feedback": "The conceptual design for RAG is sound and aligns with requirements. Actual implementation and demonstration of ingestion, retrieval, and grounding with citations are needed to earn full marks."
+          },
+          {
+            "name": "Text-to-SQL & Query Safety",
+            "max_marks": 20,
+            "marks_awarded": 12,
+            "evidence": "The submission provides a detailed SQL validation function that enforces read-only SELECT queries, forbids unsafe operations (INSERT, UPDATE, DELETE, DROP, etc.), disallows multiple statements, and suggests further safety measures like schema allow-lists and timeouts. This shows strong attention to safe query execution. However, no examples of natural language to SQL translation or validation tests are shown.",
+            "feedback": "Excellent safety controls for SQL queries are implemented. To improve, include examples of natural language queries converted to SQL, validation of those queries, and demonstration of safe execution."
+          },
+          {
+            "name": "AI Agent Orchestration",
+            "max_marks": 20,
+            "marks_awarded": 6,
+            "evidence": "The notebook describes a modular orchestration design separating SQL, retrieval, and summarization tools, treating retrieved documents as untrusted, and requiring human review for consequential decisions. However, there is no evidence of implemented routing, state management, error handling, or end-to-end agent workflows.",
+            "feedback": "The design principles for agent orchestration are appropriate and responsible. Implementation and demonstration of agent routing, error handling, and integrated workflows are needed to improve the score."
+          },
+          {
+            "name": "Evaluation & Responsible AI",
+            "max_marks": 20,
+            "marks_awarded": 8,
+            "evidence": "An evaluation checklist is provided covering abstention on missing evidence, rejection of unsafe SQL, ignoring prompt injection, avoiding unsupported metrics, and requiring human decision-making. The notebook explicitly states no autonomous credit decisions and highlights human oversight. However, no actual test cases, quantitative evaluations, or privacy/fairness analyses are presented.",
+            "feedback": "The submission shows good awareness of responsible AI principles and evaluation criteria. To improve, include executed test cases, quantitative safety evaluations, and discussion of privacy and fairness impacts."
+          }
+        ],
+        "strengths": [
+          "Clear and responsible prompt engineering with grounding instructions.",
+          "Strong SQL safety validation code enforcing read-only queries.",
+          "Thoughtful design for RAG and agent orchestration emphasizing human oversight and safety.",
+          "Explicit evaluation checklist addressing key responsible AI concerns."
+        ],
+        "areas_for_improvement": [
+          "Demonstrate actual LLM outputs with grounded explanations and citations.",
+          "Implement and show RAG ingestion, retrieval, and grounding with evidence.",
+          "Provide examples of natural language to SQL translation and validation.",
+          "Develop and demonstrate agent orchestration workflows with error handling.",
+          "Include executed test cases and quantitative evaluations for safety, privacy, and fairness."
+        ],
+        "overall_feedback": "This submission provides a well-considered conceptual framework and scaffolding for Milestone 4 requirements, including prompt design, SQL safety, RAG approach, and responsible AI evaluation. However, it lacks executed evidence such as running RAG indices, agent orchestration, actual LLM explanations, and quantitative tests. To fully meet the milestone expectations, the participant should implement and demonstrate these components with real outputs and validations. Human review is recommended due to the absence of executed results and quantitative evidence.",
+        "human_review_required": true,
+        "total_marks": 41,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_4/Participant_M4_03_loan_default_medium.md"
+    },
+    "Submission-Milestone4/Participant_M4_04_retail_purchase_medium.ipynb": {
+      "path": "Submission-Milestone4/Participant_M4_04_retail_purchase_medium.ipynb",
+      "participant": "Participant_M4_04",
+      "sha256": "c5fca9fee19284b9de1d3a738c9c98710c02ace74908356cc4be974f5e3fb690",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:45:41+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Retail_Customer_Purchase",
+        "milestone_id": "Milestone_4",
+        "criteria": [
+          {
+            "name": "LLM Explanations & Prompt Engineering",
+            "max_marks": 20,
+            "marks_awarded": 12,
+            "evidence": "The submission includes a clear prompt template instructing the LLM to use only supplied query results and retrieved approved passages, to separate observed facts from model predictions and assumptions, and to avoid inventing metrics or causal explanations. This shows awareness of prompt engineering and responsible explanation generation. However, no actual LLM-generated explanations or example outputs are provided to demonstrate the effectiveness or correctness of the explanations.",
+            "feedback": "Good prompt design and explicit instructions to avoid fabrications and causality claims. To improve, include sample LLM explanation outputs based on validated data to demonstrate the prompt's effectiveness and adherence to guidelines."
+          },
+          {
+            "name": "RAG: Ingestion/Retrieval/Grounding",
+            "max_marks": 20,
+            "marks_awarded": 8,
+            "evidence": "The submission describes ingesting only approved project-specific reference documents (product/promotion PDFs), preserving document title and page/section metadata for citations, and retrieving evidence before answering. It also states that if no relevant passage is found, the system will say so. However, no actual ingestion code, retrieval implementation, or example grounded responses with citations are provided.",
+            "feedback": "The design shows understanding of RAG principles and grounding with source metadata. To improve, provide implemented ingestion and retrieval code, demonstrate chunking, and show example grounded responses citing sources."
+          },
+          {
+            "name": "Text-to-SQL & Query Safety",
+            "max_marks": 20,
+            "marks_awarded": 15,
+            "evidence": "The submission includes example Python code for validating read-only SQL queries, enforcing that only single SELECT statements are allowed, blocking potentially unsafe keywords (INSERT, UPDATE, DELETE, DROP, etc.), and rejecting multi-statement queries. Comments indicate intended use with an approved SQLite database and enabling query-only mode. This addresses schema-aware read-only SQL and query safety well. However, no actual schema-aware SQL generation or query examples are shown, nor is input validation beyond keyword blocking demonstrated.",
+            "feedback": "Strong safety checks for SQL queries are implemented and explained. To improve, include examples of schema-aware SQL generation, input validation, and rejection of unsafe queries in practice."
+          },
+          {
+            "name": "AI Agent Orchestration",
+            "max_marks": 20,
+            "marks_awarded": 10,
+            "evidence": "The submission outlines a modular agent design with separate tools for SQL execution, retrieval, and summarization, each with explicit input/output contracts. It emphasizes logging evaluation cases without exposing sensitive data and clear routing and tool boundaries. However, no implemented agent orchestration code, workflow diagrams, or traceable output examples are provided.",
+            "feedback": "Conceptual design for agent orchestration is sound and aligns with best practices. To improve, provide implemented agent code, demonstrate coordination between tools, and show traceable outputs from the agent workflow."
+          },
+          {
+            "name": "Evaluation & Responsible AI",
+            "max_marks": 20,
+            "marks_awarded": 10,
+            "evidence": "The submission includes a detailed evaluation checklist covering unsupported questions, conflicting evidence, SQL write command rejection, prompt injection handling, sensitive data requests, and avoiding invented forecasts or metrics. It also states retail-specific guardrails to use aggregate insights and avoid causal claims. However, no actual tests, failure case reports, or documented limitations are included.",
+            "feedback": "Comprehensive evaluation and responsible AI considerations are documented. To improve, implement and report results of these tests, document limitations explicitly, and provide examples of failure handling."
+          }
+        ],
+        "strengths": [
+          "Clear and responsible prompt engineering instructions.",
+          "Thoughtful SQL safety validation code.",
+          "Well-considered modular agent design and separation of concerns.",
+          "Comprehensive evaluation checklist and privacy guardrails."
+        ],
+        "areas_for_improvement": [
+          "Provide actual LLM explanation outputs to demonstrate prompt effectiveness.",
+          "Implement and show ingestion, retrieval, and grounded response examples.",
+          "Include schema-aware SQL generation examples and input validation.",
+          "Deliver implemented agent orchestration code with traceable outputs.",
+          "Conduct and report evaluation tests and failure cases."
+        ],
+        "overall_feedback": "This submission presents a well-structured and responsible design for Milestone 4, addressing all rubric criteria conceptually with relevant code snippets and detailed plans. However, it remains largely a prototype or design document without implemented components or empirical evidence of functionality. To fully meet the milestone expectations, the participant should provide executable code for retrieval and agent orchestration, demonstrate grounded LLM explanations, and include evaluation results with documented limitations. Human review is required to verify the implementation and adherence to responsible AI principles.",
+        "human_review_required": true,
+        "total_marks": 55,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_4/Participant_M4_04_retail_purchase_medium.md"
+    },
+    "Submission-Milestone4/Participant_M4_05_healthcare_weak.ipynb": {
+      "path": "Submission-Milestone4/Participant_M4_05_healthcare_weak.ipynb",
+      "participant": "Participant_M4_05",
+      "sha256": "c9c0c3b05b680aa357b4336391a1c198a93b53516e275514bf09c4e351bd963f",
+      "submitted_by": "nithyasatheesh",
+      "submitted_at": "2026-10-27T16:54:54+05:30",
+      "commit": "e64d57a326b7a1263da703c62d4eadca6a5be74b",
+      "status": "evaluated",
+      "evaluated_at": "2026-10-27T11:45:47+00:00",
+      "attempts": 1,
+      "model": "gpt-4.1-mini",
+      "result": {
+        "project_id": "Healthcare_Liver_Disease",
+        "milestone_id": "Milestone_4",
+        "criteria": [
+          {
+            "name": "LLM Explanations & Prompt Engineering",
+            "max_marks": 20,
+            "marks_awarded": 2,
+            "evidence": "The submission includes a high-level design mentioning the need for evidence-based LLM summaries that distinguish observed data from model outputs and communicate risk responsibly. However, no actual LLM explanations or prompt engineering examples are provided.",
+            "feedback": "The submission outlines intentions for cautious, evidence-grounded explanations but lacks concrete examples or outputs demonstrating this. To improve, include sample LLM-generated explanations with clear disclaimers distinguishing associations from diagnosis or treatment advice."
+          },
+          {
+            "name": "RAG: Ingestion/Retrieval/Grounding",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "The submission states the milestone requires RAG over approved liver-health and responsible-use guides but provides no implemented ingestion, retrieval, or grounding code or results.",
+            "feedback": "No evidence of implemented RAG pipeline or retrieval with traceable citations is present. To improve, demonstrate ingestion of approved documents, retrieval of relevant passages with source citations, and abstention when evidence is unavailable."
+          },
+          {
+            "name": "Text-to-SQL & Query Safety",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "The submission mentions the use of validated read-only SQL queries but does not provide any SQL queries, schema constraints, or safety checks.",
+            "feedback": "No SQL queries or evidence of schema-constrained, read-only query usage is shown. To improve, include example safe SQL queries with schema validation and demonstrate rejection of unsafe queries or minimization of sensitive data exposure."
+          },
+          {
+            "name": "AI Agent Orchestration",
+            "max_marks": 20,
+            "marks_awarded": 0,
+            "evidence": "The submission references separate data-query and retrieval tasks and tool orchestration in the design but lacks any implemented orchestration code, routing logic, or error handling.",
+            "feedback": "No evidence of coordinating retrieval, data query, and summarization tools with clear boundaries or error handling is provided. To improve, implement and demonstrate orchestration workflows with modular components and robust error management."
+          },
+          {
+            "name": "Evaluation & Responsible AI",
+            "max_marks": 20,
+            "marks_awarded": 1,
+            "evidence": "The submission includes a high-level safety plan mentioning privacy, fairness, hallucination, and escalation checks but does not provide any testing, evaluation results, or detailed discussion.",
+            "feedback": "While the safety plan acknowledges key responsible AI concerns, no concrete evaluation or testing evidence is presented. To improve, include tests for grounding accuracy, privacy safeguards, fairness assessments, uncertainty quantification, and explicit disclaimers requiring clinical review."
+          }
+        ],
+        "strengths": [
+          "Clear high-level design and safety plan acknowledging milestone requirements and responsible AI principles.",
+          "Explicit recognition of the need for evidence-based summaries, read-only SQL, and separation of tasks."
+        ],
+        "areas_for_improvement": [
+          "Provide concrete implementations and outputs for RAG ingestion, retrieval, and grounding with source citations.",
+          "Include example safe SQL queries demonstrating schema constraints and privacy protection.",
+          "Demonstrate AI agent orchestration with modular tool coordination and error handling.",
+          "Present actual LLM explanations and prompt engineering examples that distinguish associations from clinical advice.",
+          "Conduct and report evaluations addressing grounding, privacy, fairness, uncertainty, and escalation."
+        ],
+        "overall_feedback": "The submission outlines a thoughtful high-level design and safety considerations aligned with Milestone 4 requirements but lacks any implemented code, outputs, or evaluation results. It reads as a planning document rather than a completed milestone. To meet the rubric criteria fully, the participant should provide working RAG pipelines with traceable citations, safe SQL queries, orchestrated AI agent workflows, concrete LLM explanations with disclaimers, and thorough responsible AI evaluations. Without these, the submission cannot demonstrate achievement of the milestone objectives.",
+        "human_review_required": true,
+        "total_marks": 3,
+        "maximum_marks": 100
+      },
+      "file_present": true,
+      "feedback_file": "evaluation-results/feedback/Milestone_4/Participant_M4_05_healthcare_weak.md"
+    }
+  },
+  "updated_at": "2026-10-27T11:45:48+00:00"
+}
