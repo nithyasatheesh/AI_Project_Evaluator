@@ -68,10 +68,10 @@ def needs_evaluation(entry, sha, policy="lock"):
     return True, "unknown status"
 
 
-def submitter_info(path):
-    """Commit author and time of the commit that first added the file (needs full git history)."""
+def submitter_info(path, root="."):
+    """Commit author and time of the commit that first added the file (needs full git history of root)."""
     def git(*args):
-        r = subprocess.run(["git", *args], capture_output=True, text=True, check=False)
+        r = subprocess.run(["git", "-C", str(root), *args], capture_output=True, text=True, check=False)
         return r.stdout.strip()
 
     out = git("log", "--diff-filter=A", "--format=%an|%aI|%H", "--", str(path))

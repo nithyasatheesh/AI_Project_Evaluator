@@ -1,0 +1,209 @@
+<title>Project Evaluation Results</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: rag_lab family — KPI strip, paired summary cards, sortable heat table, drill-down panel */
+:root{--bg:#f5f6fa;--surface:#fff;--sunk:#eef0f7;--border:#dfe3ee;--text:#14182b;--muted:#5d6584;--accent:#2a5bd7;--grid:#e8ebf4;
+ --dist:#0a8fa8;--merit:#2a5bd7;--pass:#b88700;--below:#c0283f;--none:#8a90a6;--good:#0f8a5f;--warn:#b26a00;--bad:#c0283f;--heat:42,91,215;
+ --font:Inter,"Segoe UI",system-ui,Arial,sans-serif;--mono:ui-monospace,"Cascadia Mono",Consolas,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1222;--surface:#171c33;--sunk:#121731;--border:#2a3157;--text:#e8ecff;--muted:#9aa4d0;--accent:#6c8cff;--grid:#232a4d;
+ --dist:#5ee7ff;--merit:#8ea6ff;--pass:#f0c24a;--below:#ff6b81;--none:#8a90b0;--good:#3ddc97;--warn:#ffb454;--bad:#ff6b81;--heat:108,140,255;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1222;--surface:#171c33;--sunk:#121731;--border:#2a3157;--text:#e8ecff;--muted:#9aa4d0;--accent:#6c8cff;--grid:#232a4d;
+ --dist:#5ee7ff;--merit:#8ea6ff;--pass:#f0c24a;--below:#ff6b81;--none:#8a90b0;--good:#3ddc97;--warn:#ffb454;--bad:#ff6b81;--heat:108,140,255;color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 var(--font)}
+.wrap{max-width:1240px;margin:0 auto;padding-block:24px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{display:flex;align-items:flex-start;gap:12px 16px;flex-wrap:wrap;margin-bottom:18px}
+h1{margin:0;font-size:1.5rem;text-wrap:balance} .sub{color:var(--muted);font-size:.9rem}
+.sp{flex:1}
+.badge{display:inline-block;border:1px solid var(--border);border-radius:99px;padding:3px 12px;font-size:.78rem;font-weight:700;color:var(--muted);background:var(--surface)}
+.badge.warn{color:var(--warn);border-color:var(--warn)}
+button.t{background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:6px 12px;cursor:pointer;font:inherit}
+button.t:focus-visible,th:focus-visible,tr:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.kpi,.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;min-width:0}
+.kpi b{display:block;font-size:1.6rem;line-height:1.2;font-variant-numeric:tabular-nums} .kpi span{color:var(--muted);font-size:.8rem}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.row3{display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:16px}
+h2{font-size:1rem;margin:0 0 10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+h2 select{margin-left:auto;font-size:.8rem;padding:4px 8px}
+.bar{display:flex;align-items:center;gap:10px;margin:7px 0;font-size:.88rem}
+.bar .l{width:150px;flex:none;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar .tr{flex:1;background:var(--grid);border-radius:4px;height:16px;overflow:hidden;min-width:40px}
+.bar .tr i{display:block;height:100%;border-radius:0 4px 4px 0}
+.bar .v{width:92px;text-align:right;color:var(--muted);flex:none;font-variant-numeric:tabular-nums}
+.band{font-weight:700;white-space:nowrap}
+.band.Distinction{color:var(--dist)} .band.Merit{color:var(--merit)} .band.Pass{color:var(--pass)} .band.Below{color:var(--below)} .band.None{color:var(--none)}
+.fill-Distinction{background:var(--dist)} .fill-Merit{background:var(--merit)} .fill-Pass{background:var(--pass)} .fill-Below{background:var(--below)} .fill-None{background:var(--none)}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;align-items:center}
+input[type=search],select{background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:7px 10px;font:inherit;max-width:100%}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.88rem;font-variant-numeric:tabular-nums}
+th,td{padding:8px;border-bottom:1px solid var(--border);text-align:left}
+th{color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;white-space:nowrap;user-select:none}
+td.c,th.c{text-align:center}
+tbody tr{cursor:pointer} tbody tr:hover{background:var(--sunk)} tbody tr.sel{background:var(--sunk);box-shadow:inset 3px 0 0 var(--accent)}
+.cell{display:inline-block;min-width:44px;padding:3px 0;border-radius:6px;font-weight:600;font-size:.8rem;text-align:center}
+.cell.z{background:var(--grid);color:var(--muted)}
+.list div{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:.88rem}
+.list div:last-child{border:0}
+.list .who{min-width:0;overflow-wrap:anywhere}
+.detail-head{display:flex;gap:12px 20px;flex-wrap:wrap;align-items:baseline;margin-bottom:12px}
+.detail-head .score{font-size:2rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.chip{border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:99px;padding:5px 12px;font:inherit;font-size:.82rem;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.chip:disabled{opacity:.45;cursor:default}
+.crit{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+.crit .item{border:1px solid var(--border);border-radius:10px;padding:10px 12px;background:var(--bg)}
+.crit .top{display:flex;justify-content:space-between;gap:10px;font-weight:600;font-size:.88rem}
+.crit .top span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap}
+.crit .tr{background:var(--grid);border-radius:4px;height:8px;overflow:hidden;margin:6px 0}
+.crit .tr i{display:block;height:100%;background:var(--accent)}
+.crit p{margin:0;color:var(--muted);font-size:.84rem}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.cols h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:0 0 6px}
+.cols ul{margin:0;padding-left:18px;font-size:.88rem}
+.overall{margin-top:14px;font-size:.9rem;max-width:75ch}
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.step{border:1px solid var(--border);border-radius:10px;padding:12px;font-size:.85rem;background:var(--bg)}
+.step b{display:block;margin-bottom:4px} .step code{font-family:var(--mono);font-size:.78rem;word-break:break-all}
+.note{color:var(--muted);font-size:.8rem;margin-top:8px}
+a{color:var(--accent)}
+.empty{color:var(--muted);font-size:.9rem;padding:8px 0}
+@media (max-width:980px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.row,.row3,.cols{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.flow{grid-template-columns:1fr}.bar .l{width:96px}.bar .v{width:70px}}
+</style>
+
+<div class="wrap">
+<header>
+  <div><h1 id="title">Project Evaluation · Results</h1><div class="sub" id="cohort"></div></div>
+  <div class="sp"></div>
+  <span class="badge" id="synth" hidden>Sample data</span>
+  <span class="badge" id="asof"></span>
+  <button class="t" id="theme" type="button">Toggle theme</button>
+</header>
+
+<div class="kpis" id="kpis"></div>
+
+<div class="row">
+  <div class="card"><h2>Score bands</h2><div id="bands"></div><div class="note">Based on each participant's average across scored milestones. Distinction ≥ 80% · Merit ≥ 65% · Pass ≥ 50%.</div></div>
+  <div class="card"><h2>Milestone progress</h2><div id="funnel"></div><div class="note">Bar = participants with a scored submission. Right = count · average score.</div></div>
+</div>
+
+<div class="row">
+  <div class="card"><h2>Average by rubric criterion <select id="critMs" aria-label="Milestone for criterion averages"></select></h2><div id="crits"></div></div>
+  <div class="card"><h2>Average by project</h2><div id="projects"></div></div>
+</div>
+
+<div class="card" style="margin-bottom:16px">
+  <h2>Participants</h2>
+  <div class="tools">
+    <input type="search" id="q" placeholder="Search participant" aria-label="Search participant">
+    <select id="pf" aria-label="Filter by project"><option value="">All projects</option></select>
+    <select id="bf" aria-label="Filter by band"><option value="">All bands</option><option>Distinction</option><option>Merit</option><option>Pass</option><option>Below 50%</option></select>
+    <span class="note" style="margin:0">Cells show % score per milestone. Click a header to sort, a row to open feedback.</span>
+  </div>
+  <div class="scroll"><table id="tbl"></table></div>
+</div>
+
+<div class="card" style="margin-bottom:16px" id="detail"></div>
+
+<div class="row3">
+  <div class="card"><h2>Needs attention</h2><div class="list" id="risk"></div></div>
+  <div class="card"><h2>Top performers</h2><div class="list" id="top"></div></div>
+</div>
+
+<div class="card" style="margin-bottom:16px">
+  <h2>How the scores get here</h2>
+  <div class="flow">
+    <div class="step"><b>1 · Submit</b>Participant uploads a notebook to <code id="subRepo">the shared submissions repo</code> in <code>Submission-MilestoneN/</code></div>
+    <div class="step"><b>2 · Evaluate</b>The evaluator repo's GitHub Action picks up new files and scores each one against its milestone rubric, once</div>
+    <div class="step"><b>3 · Record</b>The score is saved in <code>results.json</code> and never re-scored; the participant gets a comment on their commit</div>
+    <div class="step"><b>4 · Publish</b>This page and <code>data.json</code> are regenerated and pushed to <code>evaluation-results/</code></div>
+  </div>
+</div>
+<div class="note">AI-generated scores. Subject to instructor review.</div>
+</div>
+
+<script id="embedded" type="application/json">__DATA__</script>
+<script>
+(function(){
+const BANDS=["Distinction","Merit","Pass","Below 50%"];
+const bcls=b=>b==="Below 50%"?"Below":(b||"None");
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $=id=>document.getElementById(id);
+let D=JSON.parse($("embedded").textContent),sortKey="avg",sortDir=-1,selected=null,selMs=null;
+if(location.protocol!=="file:"&&!D.embeddedOnly)fetch("data.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.participants){D=j;draw()}}).catch(()=>{});
+const MS=()=>D.milestones||[1,2,3,4];
+const asOf=()=>new Date(D.asOf);
+const rel=iso=>{if(!iso)return"-";const m=Math.round((asOf()-new Date(iso))/60000);if(m<1)return"just now";if(m<60)return m+" min ago";if(m<1440)return Math.round(m/60)+" h ago";return Math.round(m/1440)+" d ago"};
+const pctStr=v=>v==null?"-":Math.round(v)+"%";
+function draw(){
+  const P=D.participants,n=P.length;
+  $("title").textContent="Project Evaluation · "+(D.cohort||"Results");
+  $("cohort").textContent=n+" participants · "+P.reduce((a,p)=>a+Object.keys(p.milestones).length,0)+" scored submissions";
+  $("synth").hidden=!D.synthetic;
+  $("asof").textContent="As of "+asOf().toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"});
+  if(D.submissionsRepo)$("subRepo").textContent=D.submissionsRepo;
+  const scored=P.filter(p=>p.avg!=null),subs=P.flatMap(p=>Object.values(p.milestones));
+  const avg=subs.length?subs.reduce((a,s)=>a+s.pct,0)/subs.length:null;
+  const errs=(D.errors||[]).length;
+  const kp=[[n,"Participants"],[subs.length,"Submissions scored"],[pctStr(avg),"Average score"],[P.filter(p=>p.band==="Distinction").length,"Distinction"],[P.filter(p=>p.band==="Below 50%").length,"Below 50%"],[errs,"Could not evaluate"]];
+  $("kpis").innerHTML=kp.map(k=>`<div class="kpi"><b>${esc(k[0])}</b><span>${k[1]}</span></div>`).join("");
+  const cnt=Object.fromEntries(BANDS.map(b=>[b,P.filter(p=>p.band===b).length]));
+  $("bands").innerHTML=n?BANDS.map(b=>`<div class="bar"><div class="l band ${bcls(b)}">${b}</div><div class="tr"><i class="fill-${bcls(b)}" style="width:${cnt[b]/n*100}%"></i></div><div class="v">${cnt[b]} · ${Math.round(cnt[b]/n*100)}%</div></div>`).join(""):`<div class="empty">No scores yet.</div>`;
+  $("funnel").innerHTML=MS().map(m=>{const s=P.map(p=>p.milestones[m]).filter(Boolean);const a=s.length?s.reduce((x,y)=>x+y.pct,0)/s.length:null;return `<div class="bar"><div class="l">Milestone ${m}</div><div class="tr"><i style="width:${n?s.length/n*100:0}%;background:var(--accent)"></i></div><div class="v">${s.length}/${n} · ${pctStr(a)}</div></div>`}).join("");
+  const sel=$("critMs");const have=MS().filter(m=>P.some(p=>p.milestones[m]));
+  sel.innerHTML=have.map(m=>`<option value="${m}">Milestone ${m}</option>`).join("")||`<option>No data</option>`;
+  if(selMs&&have.includes(+selMs))sel.value=selMs;
+  crits();
+  const pr={};subs.forEach(s=>{(pr[s.project]=pr[s.project]||[]).push(s.pct)});
+  $("projects").innerHTML=Object.keys(pr).sort().map(k=>{const a=pr[k].reduce((x,y)=>x+y,0)/pr[k].length;return `<div class="bar"><div class="l" title="${esc(k)}">${esc(k.replace(/_/g," "))}</div><div class="tr"><i style="width:${a}%;background:var(--accent)"></i></div><div class="v">${pctStr(a)} · ${pr[k].length}</div></div>`}).join("")||`<div class="empty">No scores yet.</div>`;
+  const pf=$("pf"),cur=pf.value;pf.innerHTML=`<option value="">All projects</option>`+Object.keys(pr).sort().map(k=>`<option value="${esc(k)}">${esc(k.replace(/_/g," "))}</option>`).join("");pf.value=cur;
+  const risk=[...(D.errors||[]).map(e=>({who:e.file,why:"could not evaluate · "+(e.error||"").slice(0,60),c:"bad"})),
+    ...P.filter(p=>p.band==="Below 50%").map(p=>({who:p.name,why:"average "+pctStr(p.avg),c:"warn"}))];
+  $("risk").innerHTML=risk.length?risk.map(r=>`<div><span class="who">${esc(r.who)}</span><span style="color:var(--${r.c});text-align:right">${esc(r.why)}</span></div>`).join(""):`<div class="sub">Nothing needs attention.</div>`;
+  const top=[...scored].sort((a,b)=>b.avg-a.avg).slice(0,5);
+  $("top").innerHTML=top.map((p,i)=>`<div><span class="who">${i+1}. ${esc(p.name)}</span><b class="band ${bcls(p.band)}">${pctStr(p.avg)}</b></div>`).join("")||`<div class="sub">No scores yet.</div>`;
+  if(!selected||!P.find(p=>p.id===selected))selected=top[0]?top[0].id:(P[0]&&P[0].id);
+  table();detail();
+}
+function crits(){
+  const m=$("critMs").value;selMs=m;const agg={};
+  D.participants.forEach(p=>{const s=p.milestones[m];if(!s)return;s.criteria.forEach(c=>{(agg[c[0]]=agg[c[0]]||[]).push(c[2]?c[1]/c[2]*100:0)})});
+  $("crits").innerHTML=Object.keys(agg).map(k=>{const a=agg[k].reduce((x,y)=>x+y,0)/agg[k].length;return `<div class="bar"><div class="l" title="${esc(k)}">${esc(k)}</div><div class="tr"><i style="width:${a}%;background:var(--accent)"></i></div><div class="v">${pctStr(a)}</div></div>`}).join("")||`<div class="empty">No scores for this milestone yet.</div>`;
+}
+function table(){
+  const q=$("q").value.toLowerCase(),pf=$("pf").value,bf=$("bf").value;
+  let rows=D.participants.filter(p=>(p.name+" "+(p.submittedBy||"")).toLowerCase().includes(q)&&(!pf||p.projects.includes(pf))&&(!bf||p.band===bf));
+  const val=p=>sortKey==="name"?p.name.toLowerCase():sortKey==="band"?BANDS.indexOf(p.band):sortKey==="last"?(p.lastSubmitted||""):sortKey==="project"?p.projects.join(","):/^m\d$/.test(sortKey)?(p.milestones[sortKey[1]]?p.milestones[sortKey[1]].pct:-1):(p[sortKey]==null?-1:p[sortKey]);
+  rows.sort((a,b)=>{const x=val(a),y=val(b);return (x>y?1:x<y?-1:0)*sortDir});
+  const heat=s=>s?`<span class="cell" style="background:rgba(var(--heat),${(.15+.6*s.pct/100).toFixed(2)});color:var(--text)">${Math.round(s.pct)}</span>`:`<span class="cell z">·</span>`;
+  const th=(k,l,c)=>`<th class="${c||""}" data-k="${k}" tabindex="0" aria-sort="${sortKey===k?(sortDir<0?"descending":"ascending"):"none"}">${l}${sortKey===k?(sortDir<0?" ▼":" ▲"):""}</th>`;
+  $("tbl").innerHTML=`<thead><tr><th>#</th>${th("name","Participant")}${th("project","Project")}${MS().map(m=>th("m"+m,"M"+m,"c")).join("")}${th("avg","Average","c")}${th("band","Band")}${th("last","Last scored")}</tr></thead><tbody>`+
+   (rows.map((p,i)=>`<tr data-id="${esc(p.id)}" tabindex="0" class="${p.id===selected?"sel":""}"><td class="sub">${i+1}</td><td><b>${esc(p.name)}</b>${p.submittedBy&&p.submittedBy!==p.name?`<div class="sub">@${esc(p.submittedBy)}</div>`:""}</td><td class="sub">${esc(p.projects.map(x=>x.replace(/_/g," ")).join(", "))}</td>${MS().map(m=>`<td class="c">${heat(p.milestones[m])}</td>`).join("")}<td class="c"><b>${pctStr(p.avg)}</b></td><td class="band ${bcls(p.band)}">${esc(p.band||"-")}</td><td class="sub">${rel(p.lastSubmitted)}</td></tr>`).join("")||`<tr><td colspan="${6+MS().length}" class="sub">No participants match.</td></tr>`)+"</tbody>";
+}
+function detail(){
+  const p=D.participants.find(x=>x.id===selected),el=$("detail");
+  if(!p){el.innerHTML=`<h2>Participant feedback</h2><div class="empty">Scores and feedback appear here once the first submission is evaluated.</div>`;return}
+  const ms=MS().filter(m=>p.milestones[m]);let m=el.dataset.ms&&p.milestones[el.dataset.ms]?el.dataset.ms:String(ms[ms.length-1]);
+  const s=p.milestones[m];
+  el.innerHTML=`<h2>Participant feedback</h2>
+   <div class="detail-head"><div><div style="font-size:1.15rem;font-weight:700">${esc(p.name)}</div><div class="sub">${esc(s.project.replace(/_/g," "))} · Milestone ${m} · scored ${rel(s.evaluatedAt)}</div></div><div class="sp"></div><div><span class="score">${s.total}</span><span class="sub"> / ${s.max}</span></div></div>
+   <div class="chips">${MS().map(x=>`<button type="button" class="chip" data-ms="${x}" aria-pressed="${String(x)===m}" ${p.milestones[x]?"":"disabled"}>Milestone ${x}${p.milestones[x]?" · "+Math.round(p.milestones[x].pct)+"%":""}</button>`).join("")}</div>
+   <div class="crit">${s.criteria.map(c=>`<div class="item"><div class="top"><span>${esc(c[0])}</span><span>${c[1]} / ${c[2]}</span></div><div class="tr"><i style="width:${c[2]?c[1]/c[2]*100:0}%"></i></div><p>${esc(c[3])}</p></div>`).join("")}</div>
+   <div class="cols"><div><h3>Strengths</h3><ul>${s.strengths.map(x=>`<li>${esc(x)}</li>`).join("")||"<li>-</li>"}</ul></div><div><h3>Areas for improvement</h3><ul>${s.improvements.map(x=>`<li>${esc(x)}</li>`).join("")||"<li>-</li>"}</ul></div></div>
+   <div class="overall"><b>Overall:</b> ${esc(s.overall)}</div>
+   <div class="note">Submission: <code>${esc(s.file)}</code>${s.feedbackFile?` · <a href="${esc(s.feedbackFile)}" target="_blank" rel="noopener">Feedback page</a>`:""}</div>`;
+  el.dataset.ms=m;
+}
+$("tbl").addEventListener("click",e=>{const h=e.target.closest("th[data-k]");if(h){sortHeader(h.dataset.k);return}const r=e.target.closest("tr[data-id]");if(r){selected=r.dataset.id;$("detail").dataset.ms="";table();detail();$("detail").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"})}});
+$("tbl").addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;const h=e.target.closest("th[data-k]");if(h){e.preventDefault();sortHeader(h.dataset.k);return}const r=e.target.closest("tr[data-id]");if(r){e.preventDefault();selected=r.dataset.id;$("detail").dataset.ms="";table();detail()}});
+function sortHeader(k){if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=(k==="name"||k==="band"||k==="project")?1:-1}table()}
+$("detail").addEventListener("click",e=>{const c=e.target.closest(".chip[data-ms]");if(c&&!c.disabled){$("detail").dataset.ms=c.dataset.ms;detail()}});
+$("q").addEventListener("input",table);$("pf").addEventListener("change",table);$("bf").addEventListener("change",table);$("critMs").addEventListener("change",crits);
+$("theme").addEventListener("click",()=>{const r=document.documentElement,dark=getComputedStyle(r).getPropertyValue("--bg").trim()==="#0e1222";r.setAttribute("data-theme",dark?"light":"dark")});
+draw();
+})();
+</script>

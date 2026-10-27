@@ -11,6 +11,7 @@ from evaluator.core import SUPPORTED, collect_submission, evaluate, load_problem
 from evaluator.ledger import (LEDGER_PATH, RESULTS_DIR, file_sha256, load_ledger, needs_evaluation,
                               now_iso, save_ledger, submitter_info)
 from evaluator.report_generator import write_reports
+from evaluator.html_report import person_id, person_name, write_dashboard
 
 SUBMISSION_ROOTS = (
     "Submission-Milestone1",
@@ -31,7 +32,7 @@ PROJECT_SIGNALS = {
     "Loan_Default": ("loan_default", "loan default", "default prediction", "credit risk")
 }
 
-def choose_project_milestone(path, config):
+def choose_project_milestone(path, config, root=Path(".")):
     path_text = path.as_posix().lower().replace("-", "_").replace(" ", "_")
     filename = path.stem.lower().replace("-", "_").replace(" ", "_")
     project_configs = config.get("projects", {})
@@ -52,7 +53,7 @@ def choose_project_milestone(path, config):
     # Infer only from explicit project evidence inside text-based submissions.
     if project is None and path.suffix.lower() in {".ipynb", ".py", ".md", ".txt", ".json", ".html"}:
         try:
-            sample = path.read_text(encoding="utf-8", errors="replace")[:50000].lower().replace("-", "_")
+            sample = (root / path).read_text(encoding="utf-8", errors="replace")[:50000].lower().replace("-", "_")
             for project_name, signals in PROJECT_SIGNALS.items():
                 if project_name in project_configs and any(s.lower().replace(" ", "_") in sample for s in signals):
                     project = project_name
@@ -89,17 +90,19 @@ def supported_submission(path):
         and path.name.lower() not in {"readme.md", "readme.txt", ".gitkeep"}
     )
 
-def discover_submissions(files_from=None):
+def discover_submissions(root=Path("."), files_from=None):
+    """Return submission paths RELATIVE to root (the submissions repo checkout)."""
+    root = Path(root)
     found = set()
     for root_name in SUBMISSION_ROOTS:
-        root = Path(root_name)
-        if root.exists():
-            found.update(p for p in root.rglob("*") if supported_submission(p))
+        folder = root / root_name
+        if folder.exists():
+            found.update(p.relative_to(root) for p in folder.rglob("*") if supported_submission(p))
     if files_from and Path(files_from).exists():
         for line in Path(files_from).read_text(encoding="utf-8").splitlines():
-            p = Path(line.strip())
-            if p.exists() and supported_submission(p):
-                found.add(p)
+            rel = Path(line.strip())
+            if line.strip() and supported_submission(root / rel):
+                found.add(rel)
     return sorted(found, key=lambda p: p.as_posix().lower())
 
 def participant_name(path):
@@ -110,8 +113,8 @@ def participant_name(path):
     match = re.search(r"(Participant[_ -]*\d+)", p.as_posix(), re.IGNORECASE)
     return re.sub(r"[ -]+", "_", match.group(1)).replace("__", "_") if match else p.stem
 
-def evaluate_one(path, config):
-    project, milestone = choose_project_milestone(path, config)
+def evaluate_one(path, config, root=Path(".")):
+    project, milestone = choose_project_milestone(path, config, root)
     project_config = config["projects"][project]
     rubric_path = project_config.get("rubrics", {}).get(milestone)
     if not rubric_path or not Path(rubric_path).exists():
@@ -124,7 +127,7 @@ def evaluate_one(path, config):
         raise FileNotFoundError(f"Configured problem statement does not exist: {problem_path}")
     problem = load_problem(problem_path)
     evidence, _ = collect_submission(
-        [path],
+        [root / path],
         int(config.get("max_file_chars", 18000)),
         int(config.get("max_total_chars", 45000)),
     )
@@ -195,7 +198,7 @@ def scores_markdown(ledger):
     return "\n".join(lines)
 
 
-def rebuild_outputs(ledger):
+def rebuild_outputs(ledger, config=None):
     """Regenerate feedback pages, SCORES.md and Excel workbooks from the ledger (no model calls)."""
     fb_root = RESULTS_DIR / "feedback"
     if fb_root.exists():
@@ -213,6 +216,7 @@ def rebuild_outputs(ledger):
         entry["feedback_file"] = target.as_posix()
         write_reports(entry["result"], entry["path"], reports_dir)
     (RESULTS_DIR / "SCORES.md").write_text(scores_markdown(ledger), encoding="utf-8")
+    write_dashboard(ledger, config or {}, RESULTS_DIR)
 
 
 def write_run_summary(new_entries, skipped, errors):
@@ -237,7 +241,8 @@ def write_run_summary(new_entries, skipped, errors):
         json.dumps([{"path": e["path"], "participant": e["participant"], "commit": e.get("commit", ""),
                      "milestone": e["result"].get("milestone_id"), "project": e["result"].get("project_id"),
                      "total": e["result"].get("total_marks"), "maximum": e["result"].get("maximum_marks"),
-                     "feedback_file": e.get("feedback_file", "")} for e in new_entries], indent=2),
+                     "feedback_file": e.get("feedback_file", ""),
+                     "pid": person_id(person_name(e["path"], e.get("submitted_by", "")))} for e in new_entries], indent=2),
         encoding="utf-8")
 
 
@@ -246,6 +251,9 @@ def main():
     parser.add_argument("--files-from", required=False, default=None)
     parser.add_argument("--force", action="append", default=[],
                         help="Re-evaluate this submission path even if already scored (instructor override). Repeatable.")
+    parser.add_argument("--submissions-root", default=None,
+                        help="Folder containing the Submission-Milestone1..4 folders (e.g. a checkout of the shared submissions repo). "
+                             "Defaults to config 'submissions_root' or the current folder.")
     parser.add_argument("--rebuild-only", action="store_true", help="Regenerate reports from saved results without evaluating.")
     args = parser.parse_args()
 
@@ -254,17 +262,18 @@ def main():
     ledger = load_ledger()
 
     if args.rebuild_only:
-        rebuild_outputs(ledger)
+        rebuild_outputs(ledger, config)
         save_ledger(ledger)
         print("Rebuilt reports from saved results.")
         return 0
 
-    candidates = discover_submissions(args.files_from)
+    root = Path(args.submissions_root or config.get("submissions_root") or ".")
+    candidates = discover_submissions(root, args.files_from)
     forced = {f.strip().replace("\\", "/") for f in args.force if f.strip()}
     todo, skipped = [], 0
     for path in candidates:
         key = path.as_posix()
-        sha = file_sha256(path)
+        sha = file_sha256(root / path)
         should, reason = needs_evaluation(ledger["submissions"].get(key), sha, policy)
         if key in forced:
             should, reason = True, "forced by instructor"
@@ -282,10 +291,10 @@ def main():
     for path, sha, reason in todo:
         key = path.as_posix()
         previous = ledger["submissions"].get(key) or {}
-        entry = {"path": key, "participant": participant_name(path), "sha256": sha, **submitter_info(path)}
+        entry = {"path": key, "participant": participant_name(path), "sha256": sha, **submitter_info(path, root)}
         try:
             print(f"Evaluating {key} ({reason}) ...")
-            result = evaluate_one(path, config)
+            result = evaluate_one(path, config, root)
             entry.update(status="evaluated", evaluated_at=now_iso(), attempts=int(previous.get("attempts", 0)) + 1,
                          model=config.get("model", "gpt-4.1-mini"), result=result)
             if previous.get("status") == "evaluated":
@@ -311,7 +320,7 @@ def main():
     for key, entry in ledger["submissions"].items():
         entry["file_present"] = key in present
 
-    rebuild_outputs(ledger)
+    rebuild_outputs(ledger, config)
     save_ledger(ledger)
     write_run_summary(new_entries, skipped, errors)
     return 1 if errors and not new_entries else 0
