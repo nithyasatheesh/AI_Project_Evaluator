@@ -3,6 +3,7 @@
   "submissions_repo": "nithyasatheesh/ai-project-submissions",
   "submissions_branch": "main",
   "publish_results_to_submissions_repo": true,
+  "publish_pdf_reports": true,
   "participant_view": "personal",
   "publish_cohort_dashboard": true,
   "participant_dashboard_url": "https://nithyasatheesh.github.io/ai-project-submissions",

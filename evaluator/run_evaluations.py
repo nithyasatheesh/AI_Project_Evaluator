@@ -12,6 +12,8 @@ from evaluator.ledger import (LEDGER_PATH, RESULTS_DIR, file_sha256, load_ledger
                               now_iso, save_ledger, submitter_info)
 from evaluator.report_generator import write_reports
 from evaluator.html_report import person_id, person_name, write_dashboard
+from evaluator.pdf_report import write_pdf_reports
+from evaluator.cohort_pdf import build_cohort_pdf
 
 SUBMISSION_ROOTS = (
     "Submission-Milestone1",
@@ -216,11 +218,19 @@ def rebuild_outputs(ledger, config=None):
         entry["feedback_file"] = target.as_posix()
         write_reports(entry["result"], entry["path"], reports_dir)
     (RESULTS_DIR / "SCORES.md").write_text(scores_markdown(ledger), encoding="utf-8")
-    write_dashboard(ledger, config or {}, RESULTS_DIR)
+    cohort_data = write_dashboard(ledger, config or {}, RESULTS_DIR)
+    # One PDF result report per submission -> evaluation-results/pdf/<Submission-MilestoneN>/<file>.pdf
+    pdf_dir = RESULTS_DIR / "pdf"
+    if pdf_dir.exists():
+        shutil.rmtree(pdf_dir)
+    if (config or {}).get("publish_pdf_reports", True):
+        write_pdf_reports(ledger, config or {}, pdf_dir,
+                          lambda key, e: person_name(key, e.get("submitted_by", "")))
     # Keep a copy of the full dashboard next to the Excel reports so it can be downloaded the same way.
     if (RESULTS_DIR / "index.html").exists():
         reports_dir.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(RESULTS_DIR / "index.html", reports_dir / "Cohort-Dashboard.html")
+        build_cohort_pdf(cohort_data, reports_dir / "Cohort-Dashboard.pdf")
 
 
 def write_run_summary(new_entries, skipped, errors):
@@ -246,7 +256,8 @@ def write_run_summary(new_entries, skipped, errors):
                      "milestone": e["result"].get("milestone_id"), "project": e["result"].get("project_id"),
                      "total": e["result"].get("total_marks"), "maximum": e["result"].get("maximum_marks"),
                      "feedback_file": e.get("feedback_file", ""),
-                     "pid": person_id(person_name(e["path"], e.get("submitted_by", "")))} for e in new_entries], indent=2),
+                     "pid": person_id(person_name(e["path"], e.get("submitted_by", ""))),
+                     "pdf": e.get("pdf_file", "")} for e in new_entries], indent=2),
         encoding="utf-8")
 
 

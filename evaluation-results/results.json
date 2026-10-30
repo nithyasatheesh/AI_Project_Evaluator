@@ -72,7 +72,8 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_1/Participant_M1_01_retail_purchase_strong.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_1/Participant_M1_01_retail_purchase_strong.md",
+      "pdf_file": "Submission-Milestone1/Participant_M1_01_retail_purchase_strong.pdf"
     },
     "Submission-Milestone1/Participant_M1_02_healthcare_strong.ipynb": {
       "path": "Submission-Milestone1/Participant_M1_02_healthcare_strong.ipynb",
@@ -145,7 +146,8 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_1/Participant_M1_02_healthcare_strong.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_1/Participant_M1_02_healthcare_strong.md",
+      "pdf_file": "Submission-Milestone1/Participant_M1_02_healthcare_strong.pdf"
     },
     "Submission-Milestone1/Participant_M1_03_loan_default_medium.ipynb": {
       "path": "Submission-Milestone1/Participant_M1_03_loan_default_medium.ipynb",
@@ -216,7 +218,8 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_1/Participant_M1_03_loan_default_medium.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_1/Participant_M1_03_loan_default_medium.md",
+      "pdf_file": "Submission-Milestone1/Participant_M1_03_loan_default_medium.pdf"
     },
     "Submission-Milestone1/Participant_M1_04_retail_purchase_medium.ipynb": {
       "path": "Submission-Milestone1/Participant_M1_04_retail_purchase_medium.ipynb",
@@ -289,7 +292,8 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_1/Participant_M1_04_retail_purchase_medium.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_1/Participant_M1_04_retail_purchase_medium.md",
+      "pdf_file": "Submission-Milestone1/Participant_M1_04_retail_purchase_medium.pdf"
     },
     "Submission-Milestone1/Participant_M1_05_healthcare_weak.ipynb": {
       "path": "Submission-Milestone1/Participant_M1_05_healthcare_weak.ipynb",
@@ -360,7 +364,8 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_1/Participant_M1_05_healthcare_weak.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_1/Participant_M1_05_healthcare_weak.md",
+      "pdf_file": "Submission-Milestone1/Participant_M1_05_healthcare_weak.pdf"
     },
     "Submission-Milestone2/Participant_M2_01_healthcare_strong.ipynb": {
       "path": "Submission-Milestone2/Participant_M2_01_healthcare_strong.ipynb",
@@ -431,7 +436,8 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_2/Participant_M2_01_healthcare_strong.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_2/Participant_M2_01_healthcare_strong.md",
+      "pdf_file": "Submission-Milestone2/Participant_M2_01_healthcare_strong.pdf"
     },
     "Submission-Milestone2/Participant_M2_02_retail_purchase_strong.ipynb": {
       "path": "Submission-Milestone2/Participant_M2_02_retail_purchase_strong.ipynb",
@@ -500,7 +506,8 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_2/Participant_M2_02_retail_purchase_strong.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_2/Participant_M2_02_retail_purchase_strong.md",
+      "pdf_file": "Submission-Milestone2/Participant_M2_02_retail_purchase_strong.pdf"
     },
     "Submission-Milestone2/Participant_M2_03_loan_default_medium.ipynb": {
       "path": "Submission-Milestone2/Participant_M2_03_loan_default_medium.ipynb",
@@ -571,7 +578,8 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_2/Participant_M2_03_loan_default_medium.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_2/Participant_M2_03_loan_default_medium.md",
+      "pdf_file": "Submission-Milestone2/Participant_M2_03_loan_default_medium.pdf"
     },
     "Submission-Milestone2/Participant_M2_04_healthcare_medium.ipynb": {
       "path": "Submission-Milestone2/Participant_M2_04_healthcare_medium.ipynb",
@@ -641,7 +649,8 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_2/Participant_M2_04_healthcare_medium.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_2/Participant_M2_04_healthcare_medium.md",
+      "pdf_file": "Submission-Milestone2/Participant_M2_04_healthcare_medium.pdf"
     },
     "Submission-Milestone2/Participant_M2_05_loan_default_weak.ipynb": {
       "path": "Submission-Milestone2/Participant_M2_05_loan_default_weak.ipynb",
@@ -711,7 +720,8 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_2/Participant_M2_05_loan_default_weak.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_2/Participant_M2_05_loan_default_weak.md",
+      "pdf_file": "Submission-Milestone2/Participant_M2_05_loan_default_weak.pdf"
     },
     "Submission-Milestone3/Participant_M3_01_loan_default_strong.ipynb": {
       "path": "Submission-Milestone3/Participant_M3_01_loan_default_strong.ipynb",
@@ -782,7 +792,8 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_3/Participant_M3_01_loan_default_strong.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_3/Participant_M3_01_loan_default_strong.md",
+      "pdf_file": "Submission-Milestone3/Participant_M3_01_loan_default_strong.pdf"
     },
     "Submission-Milestone3/Participant_M3_02_healthcare_strong.ipynb": {
       "path": "Submission-Milestone3/Participant_M3_02_healthcare_strong.ipynb",
@@ -853,7 +864,8 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_3/Participant_M3_02_healthcare_strong.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_3/Participant_M3_02_healthcare_strong.md",
+      "pdf_file": "Submission-Milestone3/Participant_M3_02_healthcare_strong.pdf"
     },
     "Submission-Milestone3/Participant_M3_03_retail_purchase_medium.ipynb": {
       "path": "Submission-Milestone3/Participant_M3_03_retail_purchase_medium.ipynb",
@@ -924,7 +936,8 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_3/Participant_M3_03_retail_purchase_medium.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_3/Participant_M3_03_retail_purchase_medium.md",
+      "pdf_file": "Submission-Milestone3/Participant_M3_03_retail_purchase_medium.pdf"
     },
     "Submission-Milestone3/Participant_M3_04_loan_default_medium.ipynb": {
       "path": "Submission-Milestone3/Participant_M3_04_loan_default_medium.ipynb",
@@ -994,7 +1007,8 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_3/Participant_M3_04_loan_default_medium.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_3/Participant_M3_04_loan_default_medium.md",
+      "pdf_file": "Submission-Milestone3/Participant_M3_04_loan_default_medium.pdf"
     },
     "Submission-Milestone3/Participant_M3_05_healthcare_weak.ipynb": {
       "path": "Submission-Milestone3/Participant_M3_05_healthcare_weak.ipynb",
@@ -1064,7 +1078,8 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_3/Participant_M3_05_healthcare_weak.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_3/Participant_M3_05_healthcare_weak.md",
+      "pdf_file": "Submission-Milestone3/Participant_M3_05_healthcare_weak.pdf"
     },
     "Submission-Milestone4/Participant_M4_01_retail_purchase_strong.ipynb": {
       "path": "Submission-Milestone4/Participant_M4_01_retail_purchase_strong.ipynb",
@@ -1136,7 +1151,8 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_4/Participant_M4_01_retail_purchase_strong.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_4/Participant_M4_01_retail_purchase_strong.md",
+      "pdf_file": "Submission-Milestone4/Participant_M4_01_retail_purchase_strong.pdf"
     },
     "Submission-Milestone4/Participant_M4_02_healthcare_strong.ipynb": {
       "path": "Submission-Milestone4/Participant_M4_02_healthcare_strong.ipynb",
@@ -1208,7 +1224,8 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_4/Participant_M4_02_healthcare_strong.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_4/Participant_M4_02_healthcare_strong.md",
+      "pdf_file": "Submission-Milestone4/Participant_M4_02_healthcare_strong.pdf"
     },
     "Submission-Milestone4/Participant_M4_03_loan_default_medium.ipynb": {
       "path": "Submission-Milestone4/Participant_M4_03_loan_default_medium.ipynb",
@@ -1280,7 +1297,8 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_4/Participant_M4_03_loan_default_medium.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_4/Participant_M4_03_loan_default_medium.md",
+      "pdf_file": "Submission-Milestone4/Participant_M4_03_loan_default_medium.pdf"
     },
     "Submission-Milestone4/Participant_M4_04_retail_purchase_medium.ipynb": {
       "path": "Submission-Milestone4/Participant_M4_04_retail_purchase_medium.ipynb",
@@ -1352,7 +1370,8 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_4/Participant_M4_04_retail_purchase_medium.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_4/Participant_M4_04_retail_purchase_medium.md",
+      "pdf_file": "Submission-Milestone4/Participant_M4_04_retail_purchase_medium.pdf"
     },
     "Submission-Milestone4/Participant_M4_05_healthcare_weak.ipynb": {
       "path": "Submission-Milestone4/Participant_M4_05_healthcare_weak.ipynb",
@@ -1422,8 +1441,9 @@
         "maximum_marks": 100
       },
       "file_present": true,
-      "feedback_file": "evaluation-results/feedback/Milestone_4/Participant_M4_05_healthcare_weak.md"
+      "feedback_file": "evaluation-results/feedback/Milestone_4/Participant_M4_05_healthcare_weak.md",
+      "pdf_file": "Submission-Milestone4/Participant_M4_05_healthcare_weak.pdf"
     }
   },
-  "updated_at": "2026-10-30T16:45:27+00:00"
+  "updated_at": "2026-10-30T17:00:34+00:00"
 }

@@ -4,3 +4,4 @@ openpyxl
 nbformat
 python-docx
 pypdf
+reportlab

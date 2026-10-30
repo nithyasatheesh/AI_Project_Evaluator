@@ -128,9 +128,12 @@ jobs:
             cp -r ../evaluation-results/participant/cohort evaluation-results/
           fi
           cp -r ../evaluation-results/feedback evaluation-results/ 2>/dev/null || true
+          # Each grad's PDF result report: Results/Submission-MilestoneN/<their file>.pdf
+          rm -rf Results
+          if [ -d ../evaluation-results/pdf ]; then cp -r ../evaluation-results/pdf Results; fi
           git config user.name  "ai-evaluator-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A evaluation-results
+          git add -A evaluation-results Results
           if git diff --cached --quiet; then echo "Nothing new to publish."; exit 0; fi
           git commit -m "Update evaluation results"
           for i in 1 2 3 4 5; do
@@ -184,7 +187,7 @@ jobs:
                 ``,
                 `## Score: ${r.total} / ${r.maximum}`,
                 ``,
-                `📄 Your feedback: ${base}/${r.feedback_file}`,
+                r.pdf ? `📄 Your result report (PDF): ${base}/Results/${r.pdf}` : `📄 Your feedback: ${base}/${r.feedback_file}`,
                 process.env.DASHBOARD_URL
                   ? `📊 Your dashboard: ${process.env.DASHBOARD_URL.replace(/\/$/, '')}/evaluation-results/#${r.pid}`
                   : (process.env.VIEW === 'leaderboard' ? `📊 All scores: ${base}/evaluation-results/SCORES.md` : ''),
