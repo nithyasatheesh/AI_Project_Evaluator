@@ -147,4 +147,9 @@ def write_dashboard(ledger, config, results_dir=Path("evaluation-results")):
     pdata = participant_data(data)
     (pdir / "data.json").write_text(json.dumps(pdata, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     (pdir / "index.html").write_text(render_html(pdata, PARTICIPANT_TEMPLATE), encoding="utf-8")
+    # Cohort dashboard for GitHub Pages (same view as the instructor file, minus GitHub usernames/errors)
+    cdir = pdir / "cohort"
+    cdir.mkdir(exist_ok=True)
+    (cdir / "data.json").write_text(json.dumps(pdata, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    (cdir / "index.html").write_text(render_html(pdata), encoding="utf-8")
     return data

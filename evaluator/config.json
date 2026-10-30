@@ -4,6 +4,7 @@
   "submissions_branch": "main",
   "publish_results_to_submissions_repo": true,
   "participant_view": "personal",
+  "publish_cohort_dashboard": true,
   "participant_dashboard_url": "https://nithyasatheesh.github.io/ai-project-submissions",
   "model": "gpt-4.1-mini",
   "resubmission_policy": "lock",

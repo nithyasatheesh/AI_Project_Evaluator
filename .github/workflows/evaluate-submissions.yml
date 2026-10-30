@@ -49,6 +49,7 @@ jobs:
               f.write(f"branch={c.get('submissions_branch', 'main')}\n")
               f.write(f"publish={'true' if c.get('publish_results_to_submissions_repo', True) else 'false'}\n")
               f.write(f"view={c.get('participant_view', 'personal')}\n")
+              f.write(f"cohort={'true' if c.get('publish_cohort_dashboard', True) else 'false'}\n")
               f.write(f"dashboard_url={c.get('participant_dashboard_url', '')}\n")
           EOF
 
@@ -111,6 +112,7 @@ jobs:
         env:
           BRANCH: ${{ steps.cfg.outputs.branch }}
           VIEW: ${{ steps.cfg.outputs.view }}
+          COHORT: ${{ steps.cfg.outputs.cohort }}
         run: |
           cd submissions
           rm -rf evaluation-results && mkdir -p evaluation-results
@@ -120,6 +122,10 @@ jobs:
           else
             # Personal "My results" page only; the cohort dashboard stays in the evaluator repo
             cp ../evaluation-results/participant/index.html ../evaluation-results/participant/data.json evaluation-results/
+          fi
+          if [ "$COHORT" = "true" ] && [ -d ../evaluation-results/participant/cohort ]; then
+            # Full cohort dashboard on GitHub Pages: .../evaluation-results/cohort/
+            cp -r ../evaluation-results/participant/cohort evaluation-results/
           fi
           cp -r ../evaluation-results/feedback evaluation-results/ 2>/dev/null || true
           git config user.name  "ai-evaluator-bot"
