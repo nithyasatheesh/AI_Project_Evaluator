@@ -1,5 +1,8 @@
 # AI Project Evaluator
 
+> ## 📊 [Open cohort dashboard](https://nithyasatheesh.github.io/ai-project-submissions/evaluation-results/cohort/)
+> Grads' results page: [My results](https://nithyasatheesh.github.io/ai-project-submissions/evaluation-results/) · Excel reports: [evaluation-results/reports](evaluation-results/reports)
+
 AI-powered, rubric-based evaluation of participant project submissions across four milestones, for three project domains:
 - **Loan Default Prediction and Risk Intelligence** (`loan_default`)
 - **Retail Customer Purchase Behaviour Prediction** (`retail_purchase`)
