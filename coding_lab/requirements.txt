@@ -1,0 +1,11 @@
+streamlit>=1.46
+streamlit-code-editor>=0.1.20
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+scipy
+openai>=1.40
+reportlab
+requests
