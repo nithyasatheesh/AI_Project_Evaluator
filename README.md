@@ -21,7 +21,7 @@ Participants never see the rubric files, the API key or this workflow.
 
 1. A participant uploads `Submission-MilestoneN/<Their_Name>_<project>.ipynb` to the **submissions repo**
    (e.g. `Submission-Milestone1/Priya_Venkatesh_loan_default.ipynb`).
-2. Every 15 minutes (07:30–23:15 IST, Mon–Sat) this repo's workflow checks the submissions repo. If nothing changed, it stops in seconds.
+2. Each upload immediately triggers this repo's workflow (through `notify-evaluator.yml` in the submissions repo), so results arrive in about 2–3 minutes. An hourly schedule is a backup.
 3. Each **new** file is scored once against its milestone rubric. The result is saved in `evaluation-results/results.json`, so it is never sent to the AI again.
 4. Results are published:
    - a **comment on the participant's upload commit** with their score and a link to their feedback,

@@ -1,6 +1,6 @@
 # Project Submissions
 
-Upload your project notebook here. It is evaluated automatically against the milestone rubric, **once per submission**, usually within 15 minutes.
+Upload your project notebook here. It is evaluated automatically against the milestone rubric, **once per submission**, usually within 2-3 minutes.
 
 ## Where to upload
 
@@ -34,7 +34,7 @@ Use the **same name** for every milestone so your scores line up on the dashboar
 
 ## Your result
 
-Within about 15 minutes of uploading, your **PDF result report** appears in the `Results` folder, in the same milestone folder and with the same file name as your notebook:
+Within about 2-3 minutes of uploading, your **PDF result report** appears in the `Results` folder, in the same milestone folder and with the same file name as your notebook:
 
 | You uploaded | Your result report |
 |---|---|

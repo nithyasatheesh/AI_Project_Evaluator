@@ -1,24 +1,32 @@
 name: Evaluate Participant Submissions
 
 # Participants upload to the SHARED SUBMISSIONS repo (set in evaluator/config.json).
-# This workflow lives in the private evaluator repo, checks the submissions repo for new
-# uploads, scores each new file ONCE, and publishes scores + the HTML dashboard back.
+# Each upload there triggers this workflow straight away (via the submissions repo's
+# "notify-evaluator" workflow), so results arrive in about 2-3 minutes. The hourly
+# schedule is only a backup in case a trigger is missed.
+# Each new file is scored ONCE; results are published back to the submissions repo.
 on:
   schedule:
-    - cron: "*/15 2-17 * * 1-6"   # every 15 min, about 07:30–23:15 IST, Monday–Saturday
+    - cron: "7 2-17 * * 1-6"   # backup: hourly, about 07:37–22:37 IST, Monday–Saturday
   workflow_dispatch:
     inputs:
+      source:
+        description: "Leave as 'manual'. ('upload' is used automatically by the submissions repo.)"
+        required: false
+        default: "manual"
       force_path:
-        description: "Re-evaluate one submission (path inside the submissions repo, e.g. Submission-Milestone1/Priya_loan_default.ipynb)"
+        description: "Re-evaluate one submission (path inside the submissions repo, e.g. Submission-Milestone1/Priya_loan_default.ipynb). Needs admin_code."
+        required: false
+        default: ""
+      admin_code:
+        description: "Admin code (the ADMIN_CODE secret) - only needed for force_path"
         required: false
         default: ""
       rebuild_only:
-        description: "Only rebuild SCORES.md / dashboard / Excel from saved results (no AI calls)"
+        description: "Only rebuild reports and PDFs from saved results (no AI calls)"
         type: boolean
         required: false
         default: false
-  repository_dispatch:
-    types: [new-submission]
 
 permissions:
   contents: write
@@ -67,7 +75,9 @@ jobs:
             exit 1
           fi
           LAST=$(cat evaluation-results/.last_submissions_commit 2>/dev/null || true)
-          if [ "${{ github.event_name }}" = "schedule" ] && [ "$HEAD" = "$LAST" ]; then
+          AUTO=false
+          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ github.event.inputs.source }}" = "upload" ]; then AUTO=true; fi
+          if [ "$AUTO" = "true" ] && [ "$HEAD" = "$LAST" ]; then
             echo "No new uploads since last run."
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
@@ -99,12 +109,25 @@ jobs:
         if: steps.check.outputs.changed == 'true'
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SOURCE: ${{ github.event.inputs.source }}
           FORCE_PATH: ${{ github.event.inputs.force_path }}
+          GIVEN_CODE: ${{ github.event.inputs.admin_code }}
+          ADMIN_CODE: ${{ secrets.ADMIN_CODE }}
           REBUILD_ONLY: ${{ github.event.inputs.rebuild_only }}
         run: |
           ARGS=(--submissions-root submissions)
-          if [ "$REBUILD_ONLY" = "true" ]; then ARGS+=(--rebuild-only); fi
-          if [ -n "$FORCE_PATH" ]; then ARGS+=(--force "$FORCE_PATH"); fi
+          if [ "$SOURCE" != "upload" ]; then
+            if [ "$REBUILD_ONLY" = "true" ]; then ARGS+=(--rebuild-only); fi
+            if [ -n "$FORCE_PATH" ]; then
+              # Re-scoring changes a recorded score, so it needs the instructor's admin code.
+              if [ -n "$ADMIN_CODE" ] && [ "$GIVEN_CODE" = "$ADMIN_CODE" ]; then
+                ARGS+=(--force "$FORCE_PATH")
+              else
+                echo "::error::Re-scoring needs the correct admin_code (set the ADMIN_CODE secret in this repo first)."
+                exit 1
+              fi
+            fi
+          fi
           python -m evaluator.run_evaluations "${ARGS[@]}"
 
       - name: Publish scores and dashboard to submissions repo
