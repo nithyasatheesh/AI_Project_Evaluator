@@ -1,6 +1,6 @@
 # Evaluation Scores
 
-_Last updated: 2026-10-30T17:00:34+00:00 · 20 evaluated · 0 with errors_
+_Last updated: 2026-11-06T09:53:32+00:00 · 22 evaluated · 0 with errors_
 
 Each submission is evaluated once; scores below are final unless an instructor re-runs it.
 
@@ -8,6 +8,8 @@ Each submission is evaluated once; scores below are final unless an instructor r
 
 | Participant | Project | Score | Evaluated | Feedback |
 |---|---|---:|---|---|
+| M1_Healthcare_Solution_Core50 | Healthcare_Liver_Disease | **90** / 100 | 2026-11-06 | [view](feedback/Milestone_1/M1_Healthcare_Solution_Core50.md) |
+| M1_Healthcare_Solution_Core85 | Healthcare_Liver_Disease | **91** / 100 | 2026-11-06 | [view](feedback/Milestone_1/M1_Healthcare_Solution_Core85.md) |
 | Participant_M1_01 | Retail_Customer_Purchase | **87** / 100 | 2026-10-27 | [view](feedback/Milestone_1/Participant_M1_01_retail_purchase_strong.md) |
 | Participant_M1_02 | Healthcare_Liver_Disease | **87** / 100 | 2026-10-27 | [view](feedback/Milestone_1/Participant_M1_02_healthcare_strong.md) |
 | Participant_M1_03 | Loan_Default | **10** / 100 | 2026-10-27 | [view](feedback/Milestone_1/Participant_M1_03_loan_default_medium.md) |
